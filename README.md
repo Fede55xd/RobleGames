@@ -10,7 +10,7 @@
   </a>
 </p>
 
-<img src="src/1.png" alt="Imagen">
+<img src="1.png" alt="Imagen">
 
 ## 🌌 Próximos juegos
 
