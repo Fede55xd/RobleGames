@@ -43,7 +43,8 @@ RobleGames está en constante expansión y se agregarán más juegos a la colecc
 
 ## Contacto
 
-Si tienes alguna duda o sugerencia, no dudes en contactarme a través de mi **[instagram](https://instagram.com/robleuy)** o a través de los *issues* del repositorio.
+Si tienes alguna duda o sugerencia, no dudes en contactarme a través de mi <a href="https://instagram.com/robleuy" target="_blank">Instagram</a> o a través de los *issues* del repositorio.
+
 
 ---
 
