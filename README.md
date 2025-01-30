@@ -2,9 +2,10 @@
 
 <p align="center">   
   <a href="https://github.com/Fede55xd/RobleGames/stargazers">
-    <img title="Estrellas en este repositorio" src="https://img.shields.io/github/stars/Fede55xd/RobleGames?label=Estrellas&color=yellow&style=flat-square&logo=github&logoColor=white">
+    <img title="Estrellas en este repositorio" src="https://img.shields.io/github/stars/Fede55xd/RobleGames?label=Estrellas&color=red&style=for-the-badge&logo=github&logoColor=white&labelColor=red">
   </a>
 </p>
+
 
 
 **RobleGames** es una colección de juegos de navegador creados por RobleUY (@robleuy) que pueden ser jugados **sin conexión a Internet**. Están desarrollados utilizando **HTML**, **CSS** y **JavaScript**, lo que permite ejecutarlos directamente en tu navegador sin necesidad de instalación ni conexión activa.
