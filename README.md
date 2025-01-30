@@ -5,32 +5,36 @@
 ## Características
 
 - **Juegos sin conexión**: Todos los juegos de RobleGames se pueden jugar sin conexión a Internet. Solo necesitas un navegador web para disfrutarlos.
-- **Accesibles desde cualquier dispositivo**: Puedes jugar en cualquier dispositivo con un navegador web moderno.
 - **Ligero y rápido**: Los juegos están diseñados para ser ligeros, rápidos y fáciles de jugar.
 
 ## Juegos actuales
 
 1. **DISPARALIENS**  
-   En **DISPARALIENS**, tu misión es eliminar a los aliens que invaden el planeta. Dispara y destruye a los alienígenas mientras evitas que te dañen. El juego incluye un contador de asesinatos, tiempo, dinero y vida, además de power-ups y bombas para hacer la experiencia más emocionante.
+   **Género**: Acción  
+   **Sobre el juego**: En **DISPARALIENS**, los jugadores deben elegir un mapa y una nave para enfrentarse a una invasión alienígena. El objetivo es eliminar a las naves enemigas mientras evitas que te dañen.
 
-2. **ROBASTEROIDE**  
-   **ROBASTEROIDE** es otro juego clásico de navegador en el que debes evitar asteroides mientras navegas por el espacio. Tienes que esquivar rocas y destruir obstáculos para seguir avanzando mientras tu nave se mueve a través del cosmos.
+2. **ROBASTEROIDE**
+   **Género: Acción**
+   **Sobre el juego:** En **ROBASTEROIDE**, te adentrarás en el espacio exterior y deberás eliminar cuantos asteroides puedas para conseguir el puntaje más alto posible.
+
 
 ## Próximos juegos
 
 RobleGames está en constante expansión y se agregarán más juegos a la colección. ¡Mantente atento a las actualizaciones!
 
-- **Nuevo juego en desarrollo**: Se están preparando nuevos juegos que incorporarán características innovadoras y más dinámicas. ¡Estén atentos!
 
 ## Instrucciones de uso
 
-1. Descarga o clona el repositorio.
-2. Abre cualquier archivo HTML en tu navegador.
-3. Disfruta de los juegos directamente en la pestaña de tu navegador.
+1. Descarga o clona el repositorio. **[Haz clic para descargar ahora](https://github.com/Fede55xd/RobleGames/archive/refs/heads/main.zip)**
+2. Extrae el archivo .zip.
+3. Ingresa a la carpeta extraída.
+4. Ejecuta el archivo **RobleGames.bat**.
+5. Selecciona un juego y disfruta de la experiencia.
+
 
 ## Requisitos
 
-- Un navegador web moderno como Google Chrome, Mozilla Firefox o Microsoft Edge.
+- Un navegador web. Ejemplo: Chrome, brave, firefox, opera
 - No se requiere conexión a Internet para jugar.
 
 ## Contribuciones
@@ -39,11 +43,7 @@ RobleGames está en constante expansión y se agregarán más juegos a la colecc
 
 ## Contacto
 
-Si tienes alguna duda o sugerencia, no dudes en contactarme a través de [mi correo](mailto:tucorreo@dominio.com) o a través de los *issues* del repositorio.
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT - consulta el archivo [LICENSE](LICENSE) para más detalles.
+Si tienes alguna duda o sugerencia, no dudes en contactarme a través de mi **[instagram](https://instagram.com/robleuy)** o a través de los *issues* del repositorio.
 
 ---
 
