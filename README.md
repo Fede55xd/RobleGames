@@ -1,5 +1,5 @@
 <p align="center">
-  <strong style="font-size: 50px;">RobleGames 🎮</strong>
+  <strong style="font-size: 150px; line-height: 1;">RobleGames 🎮</strong>
 </p>
 <p align="center">
   <strong style="font-size: 18px;">Si te gusta este repositorio, por favor, deja una estrella ⭐</strong>
@@ -9,6 +9,7 @@
     <img title="Estrellas en este repositorio" src="https://img.shields.io/github/stars/Fede55xd/RobleGames?label=Estrellas&color=black&style=flat&logo=github&logoColor=white&labelColor=black&logoWidth=30&scale=12">
   </a>
 </p>
+
 
 
 
