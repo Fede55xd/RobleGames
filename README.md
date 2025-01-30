@@ -32,7 +32,7 @@
 2. **ROBASTEROIDE**  
    **Género**: Acción / Espacial / Supervivencia  
    **Sobre el juego**: En **ROBASTEROIDE**, te adentrarás en el espacio exterior y deberás destruir cuantos asteroides puedas para conseguir el puntaje más alto posible.
-<img src="src/fondo.png" alt="Imagen">
+<img src="src/menu.png" alt="Imagen">
 
 ## 🌌 Próximos juegos
 
