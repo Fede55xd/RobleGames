@@ -1,7 +1,7 @@
 # RobleGames ✨
 
 <p align="center">
-  Si te gusta este repositorio, por favor, deja una estrella ⭐
+  ## Si te gusta este repositorio, por favor, deja una estrella ⭐
 </p>
 <p align="center">
   <a href="https://github.com/Fede55xd/RobleGames/stargazers">
