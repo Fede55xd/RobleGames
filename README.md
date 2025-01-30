@@ -1,7 +1,8 @@
 # RobleGames
 
-**RobleGames** es una colección de juegos de navegador creados por RobleUY (@robleuy) que pueden ser jugados sin conexión a Internet. Están desarrollados utilizando **HTML**, **CSS** y **JavaScript**, lo que permite ejecutarlos directamente en tu navegador sin necesidad de instalación ni conexión activa.
+![Fondo](https://i.imgur.com/a/GZ7hsnt)
 
+**RobleGames** es una colección de juegos de navegador creados por RobleUY (@robleuy) que pueden ser jugados sin conexión a Internet. Están desarrollados utilizando **HTML**, **CSS** y **JavaScript**, lo que permite ejecutarlos directamente en tu navegador sin necesidad de instalación ni conexión activa.
 
 ## Características
 
@@ -25,11 +26,10 @@ RobleGames está en constante expansión y se agregarán más juegos a la colecc
 
 ## Instrucciones de uso
 
-1. Descarga o clona el repositorio. **[Haz clic para descargar ahora](https://github.com/Fede55xd/RobleGames/releases/download/RobleGames/v1.0_RobleGames.Setup.exe)**
-2. Extrae el archivo .zip.
-3. Ingresa a la carpeta extraída.
-4. Ejecuta el archivo **RobleGames.bat**.
-5. Selecciona un juego y disfruta de la experiencia.
+1. Descarga el instalador. **[Haz clic para descargar ahora](https://github.com/Fede55xd/RobleGames/releases/download/RobleGames/v1.0_RobleGames.Setup.exe)**
+2. Instala el programa y habilita la opcion crear un acceso directo en el escritorio.
+3. Ingresa al acceso directo **RobleGames**
+4. Selecciona un juego y disfruta de la experiencia.
 
 ## Requisitos
 
