@@ -25,7 +25,6 @@
 - **Peso del instalador**: Aproximadamente 10 MB
 
 ## 🚀 Juegos actuales
-
 1. **DISPARALIENS**  
    **Género**: Acción / Espacial / Supervivencia  
    **Sobre el juego**: En **DISPARALIENS**, los jugadores deben elegir un mapa y una nave para enfrentarse a una invasión alienígena. El objetivo es eliminar a las naves enemigas mientras evitas que te dañen.
@@ -33,6 +32,7 @@
 2. **ROBASTEROIDE**  
    **Género**: Acción / Espacial / Supervivencia  
    **Sobre el juego**: En **ROBASTEROIDE**, te adentrarás en el espacio exterior y deberás destruir cuantos asteroides puedas para conseguir el puntaje más alto posible.
+<img src="src/fondo.png" alt="Imagen">
 
 ## 🌌 Próximos juegos
 
