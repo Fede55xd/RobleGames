@@ -25,7 +25,7 @@ RobleGames está en constante expansión y se agregarán más juegos a la colecc
 
 ## Instrucciones de uso
 
-1. Descarga o clona el repositorio. **[Haz clic para descargar ahora](https://github.com/Fede55xd/RobleGames/archive/refs/heads/main.zip)**
+1. Descarga o clona el repositorio. **[Haz clic para descargar ahora](https://github.com/Fede55xd/RobleGames/releases/download/RobleGames/v1.0_RobleGames.Setup.exe)**
 2. Extrae el archivo .zip.
 3. Ingresa a la carpeta extraída.
 4. Ejecuta el archivo **RobleGames.bat**.
