@@ -1,4 +1,16 @@
 # RobleGames ✨
+<p align="center">   
+  <!-- Badge para Watchers -->
+  <a href="https://github.com/Fede55xd/RobleGames/watchers">
+    <img title="Watchers" src="https://img.shields.io/github/watchers/Fede55xd/RobleGames?label=Watchers&color=green&style=flat-square">
+  </a>
+
+  <!-- Badge para Stars -->
+  <a href="https://github.com/Fede55xd/RobleGames/stargazers">
+    <img title="Stars" src="https://img.shields.io/github/stars/Fede55xd/RobleGames?label=Stars&color=yellow&style=flat-square">
+  </a>
+</p>
+
 
 ![Fondo](src/fondo.png)
 
