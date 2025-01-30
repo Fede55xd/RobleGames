@@ -1,13 +1,14 @@
 # RobleGames ✨
 
 <p align="center">
-  ## Si te gusta este repositorio, por favor, deja una estrella ⭐
+  <strong style="font-size: 18px;">Si te gusta este repositorio, por favor, deja una estrella ⭐</strong>
 </p>
 <p align="center">
   <a href="https://github.com/Fede55xd/RobleGames/stargazers">
     <img title="Estrellas en este repositorio" src="https://img.shields.io/github/stars/Fede55xd/RobleGames?label=Estrellas&color=black&style=flat&logo=github&logoColor=white&labelColor=black&logoWidth=30&scale=12">
   </a>
 </p>
+
 
 
 
