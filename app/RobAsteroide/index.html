@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página de Inicio</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 50px;
+      text-align: center;
+    }
+
+    button {
+      background-color: #333;
+      color: white;
+      padding: 20px 40px;
+      font-size: 24px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1; /* Esto asegura que el fondo no tape el contenido */
+    }
+  </style>
+</head>
+<body>
+
+  <h1>RobAsteroide</h1>
+  <button onclick="window.location.href = 'jugar.html';">Jugar</button>
+  <button onclick="window.location.href = '../index.html';">Volver al Menú Principal</button>
+
+  <canvas id="gameCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Función para ajustar el tamaño del canvas al tamaño de la ventana
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    // Llamar a resizeCanvas inicialmente y cada vez que se cambie el tamaño de la ventana
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas(); // Ajuste inicial
+
+    // Efecto de líneas blancas moviéndose
+    const lineas = [];
+    function createLines() {
+      for (let i = 0; i < 100; i++) {
+        lineas.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          velocidad: 2 + Math.random() * 3
+        });
+      }
+    }
+
+    // Actualización de las líneas
+    function moveLines() {
+      ctx.strokeStyle = "white";
+      ctx.lineWidth = 2;
+      lineas.forEach((linea, index) => {
+        ctx.beginPath();
+        ctx.moveTo(linea.x, linea.y);
+        linea.y += linea.velocidad;
+        ctx.lineTo(linea.x, linea.y);
+        ctx.stroke();
+
+        if (linea.y > canvas.height) {
+          linea.y = -10;
+        }
+      });
+    }
+
+    // Crear las líneas de movimiento
+    createLines();
+
+    // Función para actualizar el fondo
+    function updateBackground() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
+      moveLines();  // Mover las líneas para dar el efecto de movimiento
+      requestAnimationFrame(updateBackground); // Continuar el efecto
+    }
+
+    // Iniciar el fondo animado
+    updateBackground();
+  </script>
+
+</body>
+</html>

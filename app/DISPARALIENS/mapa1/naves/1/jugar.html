@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DISPARALIENS</title>
+    <style>
+        /* Aseguramos que el html y body ocupen el 100% del tamaño de la ventana */
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Evita las barras de desplazamiento */
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+
+        body {
+            background-image: url('../../../src/fondos/fondo1.jpg');
+            background-size: cover;
+            background-position: center center;
+            margin: 0;
+            height: 100vh;
+            position: relative;
+            border: 5px solid black;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+
+        #sprite {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 300px;
+    height: auto;
+    transition: left 0.1s ease;
+    user-select: none; /* Evita la selección del contenido */
+    outline: none; /* Elimina el borde azul al hacer clic */
+}
+
+        #mira {
+            position: absolute;
+            pointer-events: none;
+            width: 50px;
+            height: auto;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+
+        .alien, .botiquin, .bomba {
+            position: absolute;
+            width: 250px;
+            height: auto;
+            cursor: pointer;
+            user-select: none; /* Evita la selección del contenido */
+            outline: none; /* Elimina el borde azul al hacer clic */
+        }
+
+        #contador, #dinero, #vida, #record, #tiempo {
+            position: fixed;
+            font-size: 24px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none; /* Elimina el borde azul al hacer clic */
+        }
+
+        #contador {
+            top: 10px;
+            left: 10px;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+
+        #dinero {
+            top: 10px;
+            right: 10px;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+
+        #vida {
+            top: 50px;
+            left: 10px;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+
+        #record {
+            top: 90px;
+            left: 10px;
+            color: yellow;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+
+        #tiempo {
+            top: 130px;
+            left: 10px;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+
+        #sangre {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url('../../../src/assets/sangre.png') no-repeat center center;
+            background-size: cover;
+            display: none;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+
+        /* Botiquín y bomba */
+        #explosion {
+            position: absolute;
+            width: 8000px;
+            height: 8000px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 100;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+
+        /* Pantalla de Pausa */
+        #pause-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 200;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+        #pause-screen button {
+            background-color: #444;
+            color: white;
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+        #pause-screen button:hover {
+            background-color: #666;
+			user-select: none; /* Evita la selección del contenido */
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sprite del arma -->
+    <img id="sprite" src="../../../src/naves/1.png" alt="Arma">
+
+    <!-- Mira -->
+    <img id="mira" src="../../../src/assets/mira.png" alt="Mira">
+
+    <!-- Contador de asesinatos -->
+	<div id="dinero">Dinero: $0</div>
+    <div id="contador">Asesinatos: 0</div>
+
+    <!-- Contador de vida -->
+    <div id="vida">Vida: 100</div>
+
+    <!-- Imagen de sangre -->
+    <div id="sangre"></div>
+
+    <!-- Record de asesinatos -->
+    <div id="record">Récord de Asesinatos: 0</div>
+
+    <!-- Contador de tiempo -->
+    <div id="tiempo">Tiempo: 0s</div>
+
+    <!-- Imagen de la explosión -->
+    <img id="explosion" src="../../../src/assets/explota.png" alt="Explosión">
+
+    <!-- Imagen de impacto -->
+    <img id="impacto" src="../../../src/assets/impacto.png" alt="Impacto" style="display: none; position: absolute; width: 1000px; height: auto; z-index: 100;">
+
+    <!-- Sonidos -->
+    <audio id="disparo" src="../../../src/audios/disparo.mp3" preload="auto"></audio>
+    <audio id="golpe" src="../../../src/audios/golpe.mp3" preload="auto"></audio>
+    <audio id="perdiste" src="../../../src/audios/perdiste.mp3" preload="auto"></audio>
+    <audio id="botiquin" src="../../../src/audios/botiquin.mp3" preload="auto"></audio>
+    <audio id="bomba" src="../../../src/audios/bomba.mp3" preload="auto"></audio>
+
+    <!-- Pantalla de Pausa -->
+    <div id="pause-screen">
+        <div>
+            <h2>Juego Pausado</h2>
+            <button id="resume-btn">Reanudar</button>
+            <button id="exit-btn">Salir al Menú</button>
+        </div>
+    </div>
+
+    <script>
+        // Obtener elementos
+        const sprite = document.getElementById('sprite');
+        const mira = document.getElementById('mira');
+        const contador = document.getElementById('contador');
+        const vidaContador = document.getElementById('vida');
+        const sangre = document.getElementById('sangre');
+        const recordDisplay = document.getElementById('record');
+        const tiempoDisplay = document.getElementById('tiempo');
+        const explosion = document.getElementById('explosion');
+        const impacto = document.getElementById('impacto');
+        const disparoAudio = document.getElementById('disparo');
+        const golpeAudio = document.getElementById('golpe');
+        const perdisteAudio = document.getElementById('perdiste');
+        const botiquinAudio = document.getElementById('botiquin');
+        const bombaAudio = document.getElementById('bomba');
+        const pauseScreen = document.getElementById('pause-screen');
+        const resumeBtn = document.getElementById('resume-btn');
+        const exitBtn = document.getElementById('exit-btn');
+
+        // Inicialización de los datos del jugador
+        let asesinatos = 0;
+        let vida = 100;
+        let aliens = [];
+        let tiempo = 0;
+		let dinero = parseInt(localStorage.getItem('dineroAliens')) || 0;
+        let aliensPorIntervalo = 1;
+        let botiquines = [];
+        let bombas = [];
+        let isPaused = false;
+
+        // Recuperar récord de asesinatos desde el localStorage
+        let recordAsesinatos = localStorage.getItem('recordAsesinatos') || 0;
+        recordDisplay.textContent = `Récord de Asesinatos: ${recordAsesinatos}`;
+		document.getElementById('dinero').textContent = `Dinero: $${dinero}`;
+
+        // Función para pausar el juego
+        function pauseGame() {
+            isPaused = true;
+            pauseScreen.style.display = 'flex'; // Mostrar la pantalla de pausa
+        }
+
+        // Función para reanudar el juego
+        function resumeGame() {
+            isPaused = false;
+            pauseScreen.style.display = 'none'; // Ocultar la pantalla de pausa
+        }
+
+        // Redirigir al menú principal (cuando se hace clic en el botón "Salir al Menú")
+        exitBtn.addEventListener('click', function() {
+            window.location.href = '../../.././index.html'; // Cambia la URL de esta línea según el menú principal
+        });
+
+        // Reanudar el juego al hacer clic en el botón "Reanudar"
+        resumeBtn.addEventListener('click', resumeGame);
+
+        // Función para manejar la pausa con las teclas Escape o P
+        function handlePause(event) {
+            if (event.key === 'Escape' || event.key === 'p') {
+                if (isPaused) {
+                    resumeGame();
+                } else {
+                    pauseGame();
+                }
+            }
+        }
+
+        // Agregar el evento de pausa con teclas
+        window.addEventListener('keydown', handlePause);
+
+        // Función para mover el sprite y la mira con el cursor
+        document.addEventListener('mousemove', (event) => {
+            if (isPaused) return;
+
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            sprite.style.left = `${mouseX - sprite.width / 2}px`;
+            mira.style.left = `${mouseX - mira.width / 2}px`;
+            mira.style.top = `${mouseY - mira.height / 2}px`;
+        });
+
+        // Función para crear aliens en posiciones aleatorias
+        function crearAlien() {
+            if (isPaused) return;
+
+            for (let i = 0; i < aliensPorIntervalo; i++) {
+                const alien = document.createElement('img');
+                const alienType = Math.floor(Math.random() * 5);
+                let alienSrc;
+
+                switch (alienType) {
+                    case 0:
+                        alienSrc = '../../../src/aliens/alien1.png';
+                        break;
+                    case 1:
+                        alienSrc = '../../../src/aliens/alien2.png';
+                        break;
+                    case 2:
+                        alienSrc = '../../../src/aliens/alien3.png';
+                        break;
+                    case 3:
+                        alienSrc = '../../../src/aliens/alien4.png';
+                        break;
+                    case 4:
+                        alienSrc = '../../../src/aliens/alien5.png';
+                        break;
+                }
+
+                alien.src = alienSrc;
+                alien.classList.add('alien');
+
+                const maxX = window.innerWidth - 250;
+                const maxY = window.innerHeight - 250;
+
+                alien.style.left = `${Math.random() * maxX}px`;
+                alien.style.top = `${Math.random() * maxY}px`;
+
+                document.body.appendChild(alien);
+                aliens.push(alien);
+
+                setTimeout(() => {
+                    if (aliens.includes(alien)) {
+                        if (isPaused) return;
+
+                        sangre.style.display = 'block';
+                        const damage = Math.floor(Math.random() * 10) + 5;
+                        vida = Math.max(0, vida - damage);
+                        vidaContador.textContent = `Vida: ${vida}`;
+
+                        golpeAudio.currentTime = 0;
+                        golpeAudio.play();
+
+                        if (vida <= 0) {
+                            window.location.href = '../../.././perdiste.html';
+                        }
+
+                        setTimeout(() => {
+                            sangre.style.display = 'none';
+                        }, 1000);
+
+                        alien.remove();
+                        aliens = aliens.filter(a => a !== alien);
+                    }
+                }, 2000); 
+
+                alien.addEventListener('click', () => {
+                    if (isPaused) return;
+
+                    // Obtener la posición del alien
+                    const alienRect = alien.getBoundingClientRect();
+                    
+                    // Mostrar la imagen de impacto en la posición del alien
+                    impacto.style.left = `${alienRect.left + (alienRect.width / 1) - (impacto.width / 1)}px`;
+                    impacto.style.top = `${alienRect.top + (alienRect.height / 1) - (impacto.height / 1)}px`;
+                    impacto.style.display = 'block';
+
+                    // Ocultar la imagen de impacto después de 0.5 segundos
+                    setTimeout(() => {
+                        impacto.style.display = 'none';
+                    }, 500);
+
+                    alien.remove();
+                    aliens = aliens.filter(a => a !== alien);
+                    asesinatos++;
+					dinero += 10; // Incrementar dinero con cada kill
+                    localStorage.setItem('dineroAliens', dinero); // Guardar dinero en localStorage
+                    document.getElementById('dinero').textContent = `Dinero: $${dinero}`;
+                    contador.textContent = `Asesinatos: ${asesinatos}`;
+
+                    disparoAudio.currentTime = 0;
+                    disparoAudio.play();
+
+                    if (asesinatos > recordAsesinatos) {
+                        recordAsesinatos = asesinatos;
+                        recordDisplay.textContent = `Récord de Asesinatos: ${recordAsesinatos}`;
+                        localStorage.setItem('recordAsesinatos', recordAsesinatos);
+                    }
+                });
+            }
+        }
+
+        // Función para crear botiquín
+        function crearBotiquin() {
+            if (isPaused) return;
+
+            const botiquin = document.createElement('img');
+            botiquin.src = '../../../src/assets/botiquin.png';
+            botiquin.classList.add('botiquin');
+
+            const maxX = window.innerWidth - 50;
+            botiquin.style.left = `${Math.random() * maxX}px`;
+            botiquin.style.top = '-60px';
+            document.body.appendChild(botiquin);
+
+            let topPosition = -60;
+            const botiquinInterval = setInterval(() => {
+                if (isPaused) return;
+
+                topPosition += 5;
+                botiquin.style.top = `${topPosition}px`;
+
+                if (topPosition >= window.innerHeight ) {
+                    clearInterval(botiquinInterval);
+                    botiquin.remove();
+                }
+            }, 50);
+
+            botiquin.addEventListener('click', () => {
+                if (isPaused) return;
+
+                clearInterval(botiquinInterval);
+                botiquin.remove();
+
+                vida = 100;
+                vidaContador.textContent = `Vida: ${vida}`;
+
+                botiquinAudio.currentTime = 0;
+                botiquinAudio.play();
+            });
+        }
+
+        // Función para crear bomba
+        function crearBomba() {
+            if (isPaused) return;
+
+            const bomba = document.createElement('img');
+            bomba.src = '../../../src/assets/bomba.png';
+            bomba.classList.add('bomba');
+
+            const maxX = window.innerWidth - 150;
+            bomba.style.left = `${Math.random() * maxX}px`;
+            bomba.style.top = '-150px';
+            document.body.appendChild(bomba);
+
+            let topPosition = -150;
+            const bombaInterval = setInterval(() => {
+                if (isPaused) return;
+
+                topPosition += 5;
+                bomba.style.top = `${topPosition}px`;
+
+                if (topPosition >= window.innerHeight) {
+                    clearInterval(bombaInterval);
+                    bomba.remove();
+                }
+            }, 50);
+
+            bomba.addEventListener('click', () => {
+                if (isPaused) return;
+
+                clearInterval(bombaInterval);
+                bomba.remove();
+
+                bombaAudio.currentTime = 0;
+                bombaAudio.play();
+
+                explosion.style.display = 'block';
+
+                const aliensEliminados = aliens.length;
+
+                asesinatos += aliensEliminados;
+                contador.textContent = `Asesinatos: ${asesinatos}`;
+
+                aliens.forEach(alien => alien.remove());
+                aliens = [];
+
+                if (asesinatos > recordAsesinatos) {
+                    recordAsesinatos = asesinatos;
+                    recordDisplay.textContent = `Récord de Asesinatos: ${recordAsesinatos}`;
+                    localStorage.setItem('recordAsesinatos', recordAsesinatos);
+                }
+
+                setTimeout(() => {
+                    explosion.style.display = 'none';
+                }, 500);
+            });
+        }
+
+        // Función para actualizar el contador de tiempo
+        function actualizarTiempo() {
+            if (isPaused) return;
+
+            tiempo++;
+            tiempoDisplay.textContent = `Tiempo: ${tiempo}s`;
+
+            // Cada 10 segundos crea un botiquín
+            if (tiempo % 10 === 0) {
+                crearBotiquin(); // Crear un botiquín
+            }
+
+            // Cada 15 segundos crea una bomba
+            if (tiempo % 15 === 0) {
+                crearBomba();    // Crear una bomba
+            }
+
+            // Cada 60 segundos aumenta la cantidad de aliens por intervalo
+            if (tiempo % 60 === 0) {
+                aliensPorIntervalo++;
+            }
+        }
+
+        setInterval(crearAlien, 3000); 
+        setInterval(actualizarTiempo, 1000);
+    </script>
+
+</body>
+</html>

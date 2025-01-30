@@ -1,0 +1,13 @@
+{
+  "name": "disparaliens",
+  "version": "1.0.0",
+  "description": "Juego DisparAliens",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^34.0.1",
+    "electron-packager": "^17.1.2"
+  }
+}

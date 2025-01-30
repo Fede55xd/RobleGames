@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigBet</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #333;
+            background-color: black; /* Fondo negro */
+        }
+        /* Agregar tus estilos CSS aquí */
+        #image-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(128, 128, 128, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .content {
+            background-color: #000; /* Fondo negro */
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff; /* Texto blanco */
+        }
+        h1 {
+            color: #ff7f0e; /* Naranja */
+            text-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+			
+		}
+
+    button2 {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      font-size: 24px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin: 10px;
+	  
+        }
+        .bet {
+            color: #808080; /* Gris */
+        }
+        #score {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #007bff; /* Azul */
+            transition: color 0.3s ease-in-out;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            background: black; /* Negro */
+            color: #fff; /* Texto blanco */
+        }
+        input[type="number"]::placeholder {
+            color: #007bff; /* Azul */
+            opacity: 0.7; /* Opacidad del placeholder */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            background-color: #007bff; /* Azul */
+            color: #fff; /* Blanco */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+        }
+        #rango {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #808080; /* Gris */
+        }
+        .toggle-sound-button {
+            background-color: #dc3545; /* Rojo */
+            color: #fff; /* Blanco */
+        }
+        /* Estilos adicionales */
+        #estadisticas {
+            border: 2px solid #007bff;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 20px;
+            background-color: black; /* Fondo negro */
+            color: #fff; /* Texto blanco */
+        }
+        #estadisticas h2 {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #fff; /* Texto blanco */
+        }
+        #estadisticas p {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #fff; /* Texto blanco */
+        }
+    </style>
+</head>
+<body>
+    <img src="src/imagenf.jpg" id="image-background">
+    
+    <audio id="winAudio" src="src/win1.mp3"></audio>
+    <audio id="loseAudio" src="src/lose1.mp3"></audio>
+    <audio id="loseCompletelyAudio" src="src/lose2.mp3"></audio>
+    <audio id="noMoneyAudio" src="src/nomoney.mp3"></audio>
+
+    <div class="overlay">
+        <div class="content">
+            <h1><span class="big">Big</span><span class="bet">Bet</span></h1>
+            <div id="score">Saldo Actual: <span id="saldo"></span></div>
+            <input type="number" id="cantidad" placeholder="Ingresar cantidad">
+            <button onclick="apostar()">Apostar</button>
+
+            <!-- Div para mostrar mensajes -->
+            <div id="mensaje"></div>
+            <div id="rango">Rango: <span id="rangoTexto"></span></div>
+            <!-- Div para mostrar las estadísticas -->
+            <div id="estadisticas">
+                <h2>Estadísticas 📊</h2>
+                <p>Veces apostadas: <strong id="totalApostado"></strong></p>
+                <p>Veces ganadas: <strong id="vecesGanadas"></strong></p>
+                <p>Veces perdidas: <strong id="vecesPerdidas"></strong></p>
+            </div>
+
+            <!-- Botón para desactivar/activar sonido -->
+			<p> </p>
+			<button2 onclick="window.location.href = '../index.html';">Volver al Menú Principal</button2>
+			<p> </p>
+            <button id="toggle-sound" class="toggle-sound-button" onclick="toggleSound()">Desactivar Sonido</button>
+			<p>RobleGames</p>
+			<p>@robleuy</p>
+
+            <!-- Texto de rango -->
+        </div>
+    </div>
+
+    <div class="footer">
+        
+    </div>
+
+    <script>
+        var soundEnabled = true;
+
+        var winAudio = document.getElementById("winAudio");
+        var loseAudio = document.getElementById("loseAudio");
+        var loseCompletelyAudio = document.getElementById("loseCompletelyAudio");
+        var noMoneyAudio = document.getElementById("noMoneyAudio");
+
+        var saldo = localStorage.getItem("saldo") ? parseInt(localStorage.getItem("saldo")) : 100;
+        var totalApostado = localStorage.getItem("totalApostado") ? parseInt(localStorage.getItem("totalApostado")) : 0;
+        var vecesGanadas = localStorage.getItem("vecesGanadas") ? parseInt(localStorage.getItem("vecesGanadas")) : 0;
+        var vecesPerdidas = localStorage.getItem("vecesPerdidas") ? parseInt(localStorage.getItem("vecesPerdidas")) : 0;
+
+        actualizarSaldo();
+        actualizarEstadisticas();
+        determinarRango();
+
+        var images = ['imagenf.jpg', 'imagenf2.jpg', 'imagenf3.jpg', 'imagenf4.jpg'];
+        var randomIndex = Math.floor(Math.random() * images.length);
+        var imageElement = document.getElementById('image-background');
+        imageElement.src = 'src/' + images[randomIndex];
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            var toggleSoundButton = document.getElementById("toggle-sound");
+            toggleSoundButton.textContent = soundEnabled ? "Desactivar Sonido" : "Activar Sonido";
+            toggleSoundButton.className = soundEnabled ? "toggle-sound-button" : "toggle-sound-button disabled";
+
+            if (!soundEnabled) {
+                winAudio.pause();
+                loseAudio.pause();
+                loseCompletelyAudio.pause();
+                noMoneyAudio.pause();
+            }
+        }
+
+        function apostar() {
+            var cantidad = parseInt(document.getElementById("cantidad").value);
+            if (isNaN(cantidad) || cantidad <= 0) {
+                mostrarMensaje("Ingrese una cantidad válida para apostar.");
+                if (soundEnabled) {
+                    noMoneyAudio.play(); // Reproduce el sonido de no tener suficiente saldo
+                }
+                return;
+            }
+            if (cantidad > saldo) {
+                mostrarMensaje("No tienes suficiente saldo para esta apuesta.");
+                if (soundEnabled) {
+                    noMoneyAudio.play(); // Reproduce el sonido de no tener suficiente saldo
+                }
+                return;
+            }
+
+            totalApostado++;
+
+            winAudio.pause();
+            winAudio.currentTime = 0;
+            loseAudio.pause();
+            loseAudio.currentTime = 0;
+            loseCompletelyAudio.pause();
+            loseCompletelyAudio.currentTime = 0;
+            noMoneyAudio.pause();
+            noMoneyAudio.currentTime = 0;
+
+            var resultado = Math.random();
+            if (resultado < 0.5) {
+                saldo += cantidad;
+                vecesGanadas++;
+                mostrarMensaje("¡Ganaste 😀 " + cantidad + "!", true);
+                if (soundEnabled) {
+                    winAudio.play();
+                }
+            } else {
+                saldo -= cantidad;
+                vecesPerdidas++;
+                if (saldo <= 0) {
+                    reiniciarJuego();
+                    if (soundEnabled) {
+                        loseCompletelyAudio.play();
+                    }
+                } else {
+                    mostrarMensaje("Has perdido 😔 " + cantidad + ".", false);
+                    if (soundEnabled) {
+                        loseAudio.play();
+                    }
+                }
+            }
+            actualizarSaldo();
+            actualizarEstadisticas();
+            determinarRango();
+            guardarDatos();
+        }
+
+        function actualizarSaldo() {
+            var saldoElement = document.getElementById("saldo");
+            saldoElement.textContent = saldo;
+            var scoreElement = document.getElementById("score");
+            scoreElement.className = saldo > 100 ? "success" : saldo < 100 ? "error" : "";
+        }
+
+        function reiniciarJuego() {
+            window.location.href = "perdiste.html";
+            saldo = 100;
+            totalApostado = 0;
+            vecesGanadas = 0;
+            vecesPerdidas = 0;
+            actualizarEstadisticas();
+            guardarDatos();
+        }
+
+        function mostrarMensaje(mensaje, exito) {
+            var mensajeElement = document.getElementById("mensaje");
+            mensajeElement.textContent = mensaje;
+            mensajeElement.className = exito ? "success" : "error";
+        }
+
+        function actualizarEstadisticas() {
+            var totalApostadoElement = document.getElementById("totalApostado");
+            var vecesGanadasElement = document.getElementById("vecesGanadas");
+            var vecesPerdidasElement = document.getElementById("vecesPerdidas");
+
+            totalApostadoElement.textContent = totalApostado;
+            vecesGanadasElement.textContent = vecesGanadas;
+            vecesPerdidasElement.textContent = vecesPerdidas;
+        }
+
+        function guardarDatos() {
+            localStorage.setItem("saldo", saldo);
+            localStorage.setItem("totalApostado", totalApostado);
+            localStorage.setItem("vecesGanadas", vecesGanadas);
+            localStorage.setItem("vecesPerdidas", vecesPerdidas);
+        }
+
+        function determinarRango() {
+            var rangoTextoElement = document.getElementById("rangoTexto");
+
+            if (saldo >= 0 && saldo <= 100) {
+                rangoTextoElement.textContent = "Aspirante";
+            } else if (saldo <= 500) {
+                rangoTextoElement.textContent = "Aficionado";
+            } else if (saldo <= 1000) {
+                rangoTextoElement.textContent = "Entusiasta";
+            } else if (saldo <= 5000) {
+                rangoTextoElement.textContent = "Experimentado";
+            } else if (saldo <= 10000) {
+                rangoTextoElement.textContent = "Veterano";
+            } else if (saldo <= 50000) {
+                rangoTextoElement.textContent = "Experto";
+            } else if (saldo <= 100000) {
+                rangoTextoElement.textContent = "Maestro";
+            } else if (saldo <= 500000) {
+                rangoTextoElement.textContent = "Magnate";
+            } else if (saldo <= 1000000) {
+                rangoTextoElement.textContent = "Mogul";
+            } else {
+                rangoTextoElement.textContent = "Millonario";
+            }
+        }
+
+        setInterval(function() {
+            actualizarSaldo();
+            determinarRango();
+        }, 1000);
+    </script>
+</body>
+</html>
