@@ -10,12 +10,12 @@
 ## Juegos actuales
 
 1. **DISPARALIENS**  
-   **Género**: Acción  
+   **Género**: Acción / Espacial / Supervivencia
    **Sobre el juego**: En **DISPARALIENS**, los jugadores deben elegir un mapa y una nave para enfrentarse a una invasión alienígena. El objetivo es eliminar a las naves enemigas mientras evitas que te dañen.
 
-2. **ROBASTEROIDE**
-   **Género: Acción**
-   **Sobre el juego:** En **ROBASTEROIDE**, te adentrarás en el espacio exterior y deberás eliminar cuantos asteroides puedas para conseguir el puntaje más alto posible.
+1. **ROBASTEROIDE**  
+   **Género**: Acción / Espacial / Supervivencia
+   **Sobre el juego**: En **ROBASTEROIDE**, te adentrarás en el espacio exterior y deberás eliminar cuantos asteroides puedas para conseguir el puntaje más alto posible.
 
 
 ## Próximos juegos
