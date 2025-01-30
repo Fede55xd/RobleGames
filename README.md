@@ -10,26 +10,7 @@
   </a>
 </p>
 
-
-
-
-**RobleGames** es una colección de juegos de navegador creados por RobleUY (@robleuy) que pueden ser jugados **sin conexión a Internet**. Están desarrollados utilizando **HTML**, **CSS** y **JavaScript**, lo que permite ejecutarlos directamente en tu navegador sin necesidad de instalación ni conexión activa.
-
-## 🌟 Características
-
-- **Juegos sin conexión**: Todos los juegos de RobleGames se pueden jugar sin conexión a Internet. Solo necesitas un navegador web para disfrutarlos.
-- **Ligero y rápido**: Los juegos están diseñados para ser ligeros y rápidos.
-- **Peso del instalador**: Aproximadamente 10 MB
-
-## 🚀 Juegos actuales
-1. **DISPARALIENS**  
-   **Género**: Acción / Espacial / Supervivencia  
-   **Sobre el juego**: En **DISPARALIENS**, los jugadores deben elegir un mapa y una nave para enfrentarse a una invasión alienígena. El objetivo es eliminar a las naves enemigas mientras evitas que te dañen.
-
-2. **ROBASTEROIDE**  
-   **Género**: Acción / Espacial / Supervivencia  
-   **Sobre el juego**: En **ROBASTEROIDE**, te adentrarás en el espacio exterior y deberás destruir cuantos asteroides puedas para conseguir el puntaje más alto posible.
-<img src="src/menu.png" alt="Imagen">
+<img src="src/1.png" alt="Imagen">
 
 ## 🌌 Próximos juegos
 
