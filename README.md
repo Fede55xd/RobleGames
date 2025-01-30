@@ -10,9 +10,6 @@
   </a>
 </p>
 
-<img src="src/fondo1.png" alt="Imagen">
-
-
 
 
 
