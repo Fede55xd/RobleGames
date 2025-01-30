@@ -1,18 +1,8 @@
 # RobleGames ✨
+
 <p align="center">   
-  <!-- Badge para Watchers -->
-  <a href="https://github.com/Fede55xd/RobleGames/watchers">
-    <img title="Watchers" src="https://img.shields.io/github/watchers/Fede55xd/RobleGames?label=Watchers&color=green&style=flat-square">
-  </a>
-
-  <!-- Badge para Stars -->
-  <a href="https://github.com/Fede55xd/RobleGames/stargazers">
-    <img title="Stars" src="https://img.shields.io/github/stars/Fede55xd/RobleGames?label=Stars&color=yellow&style=flat-square">
-  </a>
+  <a href="https://github.com/Fede55xd/RobleGames/stargazers"><img title="Estrellas en este repositorio" src="https://img.shields.io/github/stars/Fede55xd/RobleGames?label=Estrellas&color=yellow&style=flat-square"></a>
 </p>
-
-
-![Fondo](src/fondo.png)
 
 **RobleGames** es una colección de juegos de navegador creados por RobleUY (@robleuy) que pueden ser jugados **sin conexión a Internet**. Están desarrollados utilizando **HTML**, **CSS** y **JavaScript**, lo que permite ejecutarlos directamente en tu navegador sin necesidad de instalación ni conexión activa.
 
