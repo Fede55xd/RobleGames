@@ -6,7 +6,8 @@
 ## Características
 
 - **Juegos sin conexión**: Todos los juegos de RobleGames se pueden jugar sin conexión a Internet. Solo necesitas un navegador web para disfrutarlos.
-- **Ligero y rápido**: Los juegos están diseñados para ser ligeros, rápidos y fáciles de jugar.
+- **Ligero y rápido**: Los juegos están diseñados para ser ligeros y rápidos.
+- **Peso del instalador**: Aproximadamente 10 MB
 
 ## Juegos actuales
 
