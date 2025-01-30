@@ -2,7 +2,7 @@
 
 <p align="center">   
   <a href="https://github.com/Fede55xd/RobleGames/stargazers">
-    <img title="Estrellas en este repositorio" src="https://img.shields.io/github/stars/Fede55xd/RobleGames?label=Estrellas&color=black&style=flat&logo=github&logoColor=white&labelColor=black&logoWidth=30&scale=2">
+    <img title="Estrellas en este repositorio" src="https://img.shields.io/github/stars/Fede55xd/RobleGames?label=Estrellas&color=black&style=flat&logo=github&logoColor=white&labelColor=black&logoWidth=30&scale=12">
   </a>
 </p>
 
