@@ -32,6 +32,10 @@ Este proyecto es una colección de juegos de navegador creados por RobleUY (@rob
 2. **ROBASTEROIDE**  
    **Género**: Acción / Espacial / Supervivencia  
    **Sobre el juego**: En **ROBASTEROIDE**, te adentrarás en el espacio exterior y deberás destruir cuantos asteroides puedas para conseguir el puntaje más alto posible.
+
+3. **NEON PONG**
+   **Género**: Arcade / Deportes / Competencia
+   **Sobre el juego**: **NEON PONG** es una versión moderna del clásico Pong, con gráficos brillantes y efectos visuales neon. Compite en partidas rápidas donde el objetivo es devolver la pelota a tu oponente y marcar puntos, mientras disfrutas de la dinámica retro con un toque futurista.
    
 ---
 
