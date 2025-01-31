@@ -18,7 +18,7 @@ RobleGames está en constante expansión y se agregarán más juegos a la colecc
 
 ## 📝 Instrucciones de uso
 
-1. Descarga el instalador. **[Haz clic para descargar ahora](https://github.com/Fede55xd/RobleGames/releases/download/RobleGames/v1.0_RobleGames_SETUP.exe)**
+1. Descarga el instalador. **[Haz clic para descargar ahora](https://github.com/Fede55xd/RobleGames/releases/download/RobleGames/v2.0_RobleGames_SETUP.exe)**
 2. Instala el programa y habilita la opción de crear un acceso directo en el escritorio.
 3. Ingresa al acceso directo **RobleGames**.
 4. Selecciona un juego y disfruta de la experiencia.
