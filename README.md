@@ -12,7 +12,7 @@
 
 ## 🕹 Sobre RobleGames
 
-Es una colección de juegos de navegador creados por RobleUY (@robleuy) que pueden ser jugados **sin conexión a Internet**. Están desarrollados utilizando **HTML**, **CSS** y **JavaScript**, lo que permite ejecutarlos directamente en tu navegador sin necesidad de instalación ni conexión activa.
+Este proyecto es una colección de juegos de navegador creados por RobleUY (@robleuy) que pueden ser jugados **sin conexión a Internet**. Están desarrollados utilizando **HTML**, **CSS** y **JavaScript**, lo que permite ejecutarlos directamente en tu navegador sin necesidad de instalación ni conexión activa.
 
 ## 🌟 Características
 
@@ -31,7 +31,7 @@ Es una colección de juegos de navegador creados por RobleUY (@robleuy) que pued
 
 ## 🌌 Próximos juegos
 
-RobleGames está en constante expansión y se agregarán más juegos a la colección. ¡Mantente atento a las actualizaciones!
+Estamos en constante expansión y se agregarán más juegos a la colección. ¡Mantente atento a las actualizaciones!
 
 ## 📝 Instrucciones de uso
 
