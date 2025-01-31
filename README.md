@@ -10,9 +10,13 @@
   </a>
 </p>
 
+##
+
 ## 🕹 Sobre RobleGames
 
 Este proyecto es una colección de juegos de navegador creados por RobleUY (@robleuy) que pueden ser jugados **sin conexión a Internet**. Están desarrollados utilizando **HTML**, **CSS** y **JavaScript**, lo que permite ejecutarlos directamente en tu navegador sin necesidad de instalación ni conexión activa.
+
+##
 
 ## 🌟 Características
 
@@ -20,18 +24,26 @@ Este proyecto es una colección de juegos de navegador creados por RobleUY (@rob
 - **Ligero y rápido**: Los juegos están diseñados para ser ligeros y rápidos.
 - **Peso del instalador**: Aproximadamente 10 MB
 
+##
+
 ## 🚀 Juegos actuales
 1. **DISPARALIENS**  
    **Género**: Acción / Espacial / Supervivencia  
    **Sobre el juego**: En **DISPARALIENS**, los jugadores deben elegir un mapa y una nave para enfrentarse a una invasión alienígena. El objetivo es eliminar a las naves enemigas mientras evitas que te dañen.
 
+##
+
 2. **ROBASTEROIDE**  
    **Género**: Acción / Espacial / Supervivencia  
    **Sobre el juego**: En **ROBASTEROIDE**, te adentrarás en el espacio exterior y deberás destruir cuantos asteroides puedas para conseguir el puntaje más alto posible.
 
+##
+
 ## 🌌 Próximos juegos
 
 Estamos en constante expansión y se agregarán más juegos a la colección. ¡Mantente atento a las actualizaciones!
+
+##
 
 ## 📝 Instrucciones de uso
 
@@ -45,14 +57,19 @@ Estamos en constante expansión y se agregarán más juegos a la colección. ¡M
 - Un navegador web. Ejemplo: Chrome, Brave, Firefox, Opera.
 - No se requiere conexión a Internet para jugar.
 
+##
+
 ## 🤝 Contribuciones
 
 ¡Las contribuciones son bienvenidas! Si deseas agregar nuevas características o juegos, por favor, abre un *issue* o envía un *pull request*. Estaré encantado de revisar tus aportes.
+
+##
 
 ## 📱 Contacto
 
 Si tienes alguna duda o sugerencia, no dudes en contactarme a través de mi **[Instagram](https://instagram.com/robleuy)** o a través de los *issues* del repositorio.
 
+##
 ---
 
 ¡Diviértete jugando! 🎮🚀
