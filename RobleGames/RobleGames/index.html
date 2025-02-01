@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Selección de Juegos</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon"> <!-- Icono de la página -->
+    <style>
+        /* Estilo global del body */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('fondo.png'); /* Asegúrate de que la imagen tenga buena resolución */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+            animation: moveBackground 30s linear infinite;
+        }
+
+        /* Animación para mover el fondo */
+        @keyframes moveBackground {
+            0% {
+                background-position: center top;
+            }
+            50% {
+                background-position: center bottom;
+            }
+            100% {
+                background-position: center top;
+            }
+        }
+
+        /* Estilos para el texto de "RobleGames" */
+        h1:first-of-type {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #7aff66; /* Verde clarito */
+    letter-spacing: 3px;
+    text-shadow: 4px 4px 15px rgba(122, 255, 102, 0.8), 0 0 25px rgba(122, 255, 102, 0.8); /* Sombra verde */
+    animation: pulse 1.5s infinite alternate;
+}
+
+/* Estilos para el texto de "Selecciona un Juego" */
+h1:last-of-type {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #7aff66; /* Verde clarito */
+    letter-spacing: 3px;
+    text-shadow: 4px 4px 15px rgba(122, 255, 102, 0.8), 0 0 25px rgba(122, 255, 102, 0.8); /* Sombra verde */
+    animation: pulse 1.5s infinite alternate;
+}
+
+
+        /* Animación para el texto de "RobleGames" */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        .menu-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            padding: 20px 40px;
+            margin: 15px;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Eliminar el icono, ya no es necesario */
+        .menu-button img {
+            display: none;
+        }
+
+        /* Efecto al pasar el ratón */
+        .menu-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-color: #00bcd4; /* Celeste claro */
+            transform: translateY(-5px); /* Eleva el botón ligeramente */
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.7); /* Celeste claro */
+        }
+
+        /* Efecto al hacer clic */
+        .menu-button:active {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(2px); /* Hace que el botón se presione */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Ajustar el tamaño de los botones según el tamaño de la pantalla */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .menu-button {
+                font-size: 1.2rem;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>RobleGames</h1>
+    <h1>Selecciona un Juego</h1>
+    <div class="menu-container">
+        <button class="menu-button" onclick="window.location.href='disparaliens/index.html'">
+            DISPARALIENS
+        </button>
+        <button class="menu-button" onclick="window.location.href='RobAsteroide/index.html'">
+            ROBASTEROIDE
+        </button>
+        <button class="menu-button" onclick="window.location.href='NEONPONG/index.html'">
+            NEON PONG
+        </button>
+    </div>
+
+</body>
+</html>
