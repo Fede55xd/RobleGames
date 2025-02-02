@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigBet - Perdiste</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #34495e, #16a085);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .game-container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .game-title {
+            font-size: 60px;
+            color: #f39c12;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: bold;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px #f39c12, 0 0 20px #f39c12, 0 0 30px #f39c12;
+            }
+            100% {
+                text-shadow: 0 0 20px #e74c3c, 0 0 30px #e74c3c, 0 0 40px #e74c3c;
+            }
+        }
+
+        .result {
+            font-size: 32px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .button {
+            background-color: #e74c3c;
+            border: none;
+            font-size: 28px;
+            padding: 20px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .button:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .stats {
+            font-size: 22px;
+            color: #ecf0f1;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <div class="game-title">Perdiste</div>
+    <div class="result">¡Lo sentimos, te quedaste sin dinero!</div>
+
+    <!-- Mostrar estadísticas antes de reiniciar -->
+    <div class="stats">
+        <p>Apuestas realizadas: <span id="betsMade">0</span></p>
+        <p>Victorias: <span id="wins">0</span></p>
+        <p>Derrotas: <span id="losses">0</span></p>
+        <p>Saldo actual: $<span id="currentBalance">0</span></p>
+    </div>
+
+    <button class="button" onclick="resetGame()">Volver a intentar</button>
+    <button class="button" onclick="window.location.href='../index.html'">Volver al Menú Principal</button>
+</div>
+
+<script>
+    // Recuperar estadísticas del localStorage
+    let betsMade = parseInt(localStorage.getItem('bigbetBetsMade')) || 0;
+    let wins = parseInt(localStorage.getItem('bigbetWins')) || 0;
+    let losses = parseInt(localStorage.getItem('bigbetLosses')) || 0;
+    let currentBalance = parseInt(localStorage.getItem('bigbetdinero')) || 1000;
+
+    // Mostrar las estadísticas antes de reiniciar
+    document.getElementById('betsMade').innerText = betsMade;
+    document.getElementById('wins').innerText = wins;
+    document.getElementById('losses').innerText = losses;
+    document.getElementById('currentBalance').innerText = currentBalance;
+
+    // Función para reiniciar las estadísticas y redirigir al juego
+    function resetGame() {
+        // Reiniciar estadísticas
+        localStorage.setItem('bigbetBetsMade', 0);
+        localStorage.setItem('bigbetWins', 0);
+        localStorage.setItem('bigbetLosses', 0);
+        localStorage.setItem('bigbetdinero', 1000);
+
+        // Redirigir a la página de juego
+        window.location.href = 'index.html';
+    }
+</script>
+
+</body>
+</html>

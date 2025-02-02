@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Selección de Juegos</title>
+    <link rel="icon" href="assets/icon.ico" type="image/x-icon"> <!-- Icono de la página -->
+    <style>
+        /* Estilo global del body */
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Fondo de video */
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Asegura que el video esté en el fondo */
+        }
+
+        /* Animación para mover el fondo */
+        @keyframes moveBackground {
+            0% {
+                background-position: center top;
+            }
+            50% {
+                background-position: center bottom;
+            }
+            100% {
+                background-position: center top;
+            }
+        }
+
+        /* Estilos para el texto de "RobleGames" */
+        h1:first-of-type {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #7aff66; /* Verde clarito */
+            letter-spacing: 3px;
+            text-shadow: 4px 4px 15px rgba(122, 255, 102, 0.8), 0 0 25px rgba(122, 255, 102, 0.8); /* Sombra verde */
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        /* Animación para el texto de "RobleGames" */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Estilos para el texto de "Selecciona un Juego" */
+        h1:nth-of-type(2) {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff5733; /* Color de texto */
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(255, 87, 51, 0.8), 0 0 25px rgba(255, 87, 51, 0.8); /* Sombra de texto */
+            animation: moveText 3s ease-in-out infinite; /* Efecto de movimiento */
+        }
+
+        /* Animación para el texto "Selecciona un juego" */
+        @keyframes moveText {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(10px); /* Desplazar ligeramente hacia la derecha */
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .menu-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            padding: 20px 40px;
+            margin: 15px;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Efecto al pasar el ratón */
+        .menu-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-color: #00bcd4; /* Celeste claro */
+            transform: translateY(-5px); /* Eleva el botón ligeramente */
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.7); /* Celeste claro */
+        }
+
+        /* Efecto al hacer clic */
+        .menu-button:active {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(2px); /* Hace que el botón se presione */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Contenedor de los botones */
+        .menu-container {
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); /* Define 4 columnas */
+            gap: 20px; /* Espacio entre los botones */
+            padding: 20px;
+        }
+
+        /* Ajustar el tamaño de los botones según el tamaño de la pantalla */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .menu-button {
+                font-size: 1.2rem;
+                padding: 15px 30px;
+            }
+
+            /* Para pantallas pequeñas, mostrar en 2 columnas */
+            .menu-container {
+                grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas pequeñas */
+            }
+        }
+
+        /* Pantalla de bienvenida */
+        #welcome-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        #welcome-screen h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        #enter-button {
+            font-size: 2rem;
+            padding: 20px 40px;
+            background-color: #82a0c4;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s ease;
+        }
+
+        #enter-button:hover {
+            background-color: #5fbf49;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pantalla de bienvenida -->
+    <div id="welcome-screen">
+        <h1>Bienvenido a RobleGames</h1>
+        <button id="enter-button" onclick="startGame()">INGRESAR</button>
+    </div>
+
+    <!-- Contenido original, oculto inicialmente -->
+    <div id="main-content" style="display: none;">
+        <h1>RobleGames</h1>
+        <h1>Selecciona un Juego</h1>
+        <div class="menu-container">
+            <button class="menu-button" onclick="selectGame('disparaliens/index.html')">
+                DISPARALIENS
+            </button>
+            <button class="menu-button" onclick="selectGame('RobAsteroide/index.html')">
+                ROBASTEROIDE
+            </button>
+            <button class="menu-button" onclick="selectGame('NEONPONG/index.html')">
+                NEON PONG
+            </button>
+            <button class="menu-button" onclick="selectGame('BIGBET/index.html')">
+                BIGBET
+            </button>
+            <button class="menu-button" onclick="selectGame('CIRCULO/index.html')">
+                THE CIRCLE OF COLORS
+            </button>
+            <button class="menu-button" onclick="selectGame('BADBAT/index.html')">
+                BADBAT
+            </button>
+            <button class="menu-button" onclick="selectGame('TANKS/index.html')">
+                TANKS BATTLE
+            </button>
+        </div>
+    </div>
+
+    <!-- Video de fondo -->
+    <video autoplay loop muted>
+        <source src="assets/fondo.mp4" type="video/mp4">
+        Tu navegador no soporta el formato de video.
+    </video>
+
+    <script>
+        // Función que se ejecuta al hacer clic en "INGRESAR"
+        function startGame() {
+            var audio = new Audio('assets/music.mp3'); // Asegúrate de tener este archivo de audio
+            audio.play();
+
+            var button = document.getElementById('enter-button');
+            button.style.backgroundColor = '#FF4C4C'; // Rojo
+
+            audio.addEventListener('ended', function() {
+                audio.currentTime = 0;
+                audio.play();
+            });
+
+            setTimeout(function() {
+                document.getElementById('welcome-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+            }, 1000);
+        }
+
+        // Nueva función para reproducir el sonido de selección
+        function selectGame(url) {
+            var audio = new Audio('assets/select.mp3'); // Ruta al archivo de sonido
+            audio.play();
+
+            // Redirigir después de que el sonido termine de reproducirse (opcional)
+            audio.addEventListener('ended', function() {
+                window.location.href = url;
+            });
+        }
+    </script>
+
+</body>
+</html>

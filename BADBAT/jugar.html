@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Movimiento</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        canvas {
+            display: block;
+            background-image: url('assets/fondo.png');
+            background-size: cover;
+            background-position: center;
+            width: 100%; /* Asegura que el canvas cubra toda la pantalla */
+            height: 100%;
+        }
+
+        #scoreBoard {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            color: white;
+            font-size: 30px;
+        }
+
+        #record {
+            position: absolute;
+            top: 120px;
+            left: 20px;
+            color: white;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="scoreBoard">Puntos: 0</div>
+    <div id="record">Record: 0</div>
+
+    <script>
+        // Configuración inicial
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreBoard = document.getElementById('scoreBoard');
+        const recordDisplay = document.getElementById('record');
+
+        // Función para ajustar el tamaño del canvas al tamaño de la ventana
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas(); // Llamar la función para ajustar inicialmente el canvas
+
+        const playerWidth = 100; 
+        const playerHeight = 200;
+        let playerX = canvas.width / 2 - playerWidth / 2;
+        let playerY = canvas.height - playerHeight - 100;
+
+        let playerSpeed = 10;
+        let isJumping = false;
+        let jumpHeight = 0;
+        let velocityY = 0;
+        let gravity = 0.5;
+        let jumpSpeed = -15;
+        let lives = 5;
+        let points = 0;
+
+        let jumpCount = 0;
+
+        // Guardar el record en localStorage
+        let bestScore = localStorage.getItem('badbatpuntos') || 0;
+        recordDisplay.textContent = 'Record: ' + bestScore;
+
+        // Imágenes del jugador
+        const playerImages = {
+            moveLeft1: new Image(),
+            moveLeft2: new Image(),
+            moveRight1: new Image(),
+            moveRight2: new Image(),
+            stand: new Image()
+        };
+
+        playerImages.moveLeft1.src = 'assets/movimiento1.png';
+        playerImages.moveLeft2.src = 'assets/movimiento2.png';
+        playerImages.moveRight1.src = 'assets/movimiento1.png';
+        playerImages.moveRight2.src = 'assets/movimiento2.png';
+        playerImages.stand.src = 'assets/movimiento1.png';
+
+        let currentImage = playerImages.stand;
+        let lastDirection = 'right';
+
+        let imageToggleCounter = 0;
+        const imageToggleSpeed = 10;
+
+        // Murciélago (bat) configuración
+        const batImages = {
+            bat1: new Image(),
+            bat2: new Image()
+        };
+        batImages.bat1.src = 'assets/bat1.png';
+        batImages.bat2.src = 'assets/bat2.png';
+
+        let batX = Math.random() * canvas.width;
+        let batY = 0;
+        let batSpeed = 2;
+        let batWidth = 100;
+        let batHeight = 100;
+
+        let batToggleCounter = 0;
+        const batToggleInterval = 15;
+
+        let lastBatToggleTime = 0;
+
+        // Cargar imagen de vida
+        const heartImage = new Image();
+        heartImage.src = 'assets/vida.png';
+
+        // Nueva imagen de vida cuando se pierde una vida
+        const life2Image = new Image();
+        life2Image.src = 'assets/vida2.png';
+
+        // Cargar imagen de la moneda
+        const coinImage = new Image();
+        coinImage.src = 'assets/coin.png';
+
+        let coinX = Math.random() * canvas.width;
+        let coinY = 0;
+        let coinSpeed = 3;
+        let coinWidth = 100;
+        let coinHeight = 100;
+
+        // Variables para el efecto de daño
+        let damageEffect = false;
+        let damageEffectTimer = 0;
+        const damageEffectDuration = 500;
+
+        // Escuchar las teclas
+        let keys = {
+            left: false,
+            right: false,
+            up: false
+        };
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                keys.left = true;
+            }
+            if (e.key === 'ArrowRight') {
+                keys.right = true;
+            }
+            if (e.key === 'ArrowUp' && jumpCount < 2) {
+                isJumping = true;
+                velocityY = jumpSpeed;
+                jumpCount++;
+            }
+            if (e.key === 'ArrowDown') { 
+                gravity = 2;  
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft') {
+                keys.left = false;
+            }
+            if (e.key === 'ArrowRight') {
+                keys.right = false;
+            }
+            if (e.key === 'ArrowDown') {  
+                gravity = 0.5;
+            }
+        });
+
+        // Función para detectar colisiones con la moneda
+        function detectCoinCollision() {
+            if (coinX < playerX + playerWidth && coinX + coinWidth > playerX && coinY < playerY + playerHeight && coinY + coinHeight > playerY) {
+                coinX = Math.random() * canvas.width;
+                coinY = 0;
+                coinSpeed = Math.random() * 2 + 2;
+                points += 10;
+            }
+        }
+
+        // Función para detectar colisiones
+        function detectCollision() {
+            if (batX < playerX + playerWidth && batX + batWidth > playerX && batY < playerY + playerHeight && batY + batHeight > playerY) {
+                if (lives > 0) {
+                    lives--;
+                    resetBat();
+                    damageEffect = true;
+                    damageEffectTimer = Date.now();
+                }
+            }
+        }
+
+        // Función para resetear el murciélago
+        function resetBat() {
+            batX = Math.random() * canvas.width;
+            batY = 0;
+        }
+
+        // Función para dibujar las vidas
+        function drawLives() {
+            for (let i = 0; i < lives; i++) {
+                ctx.drawImage(heartImage, 20 + i * 50, 20, 40, 40);
+            }
+            for (let i = lives; i < 5; i++) {
+                ctx.drawImage(life2Image, 20 + i * 50, 20, 40, 40); 
+            }
+        }
+
+        // Función para dibujar el contador de puntos
+        function drawPoints() {
+            scoreBoard.textContent = 'Puntos: ' + points;
+        }
+
+        // Función para actualizar el juego
+        function updateGame() {
+            // Asegura que el jugador no se salga de los límites de la pantalla
+            if (playerX < 0) playerX = 0;
+            if (playerX > canvas.width - playerWidth) playerX = canvas.width - playerWidth;
+            if (playerY < 0) playerY = 0;
+            if (playerY > canvas.height - playerHeight) playerY = canvas.height - playerHeight;
+
+            const currentTime = Date.now();
+
+            if (damageEffect && currentTime - damageEffectTimer < damageEffectDuration) {
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            if (currentTime - lastBatToggleTime > 250) {
+                lastBatToggleTime = currentTime;
+                batToggleCounter = (batToggleCounter === 0) ? 1 : 0;
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (keys.left) {
+                playerX -= playerSpeed;
+                if (imageToggleCounter % imageToggleSpeed === 0) {
+                    currentImage = (currentImage === playerImages.moveLeft1) ? playerImages.moveLeft2 : playerImages.moveLeft1;
+                }
+                lastDirection = 'left';
+            }
+            if (keys.right) {
+                playerX += playerSpeed;
+                if (imageToggleCounter % imageToggleSpeed === 0) {
+                    currentImage = (currentImage === playerImages.moveRight1) ? playerImages.moveRight2 : playerImages.moveRight1;
+                }
+                lastDirection = 'right';
+            }
+
+            if (isJumping) {
+                velocityY += gravity;
+                playerY += velocityY;
+
+                if (playerY >= canvas.height - playerHeight - 165) {
+                    playerY = canvas.height - playerHeight - 165;
+                    isJumping = false;
+                    velocityY = 0;
+                    jumpCount = 0;
+                }
+            } else if (playerY < canvas.height - playerHeight - 165) {
+                velocityY += gravity;
+                playerY += velocityY;
+            } else {
+                playerY = canvas.height - playerHeight - 165;
+                velocityY = 100;
+            }
+
+            if (batY < canvas.height) {
+                batY += batSpeed;
+                batX += (playerX - batX) * 0.05;
+            } else {
+                resetBat();
+            }
+
+            coinY += coinSpeed;
+            if (coinY > canvas.height) {
+                coinX = Math.random() * canvas.width;
+                coinY = 0;
+                coinSpeed = Math.random() * 2 + 2;
+            }
+
+            detectCollision();
+            detectCoinCollision();
+
+            if (lives <= 0) {
+                if (points > bestScore) {
+                    bestScore = points;
+                    localStorage.setItem('badbatpuntos', bestScore);
+                    recordDisplay.textContent = 'Record: ' + bestScore;
+                }
+                window.location.href = 'perdiste.html'; // Redirigir a la página de derrota
+                return;
+            }
+
+            if (lastDirection === 'left') {
+                ctx.drawImage(currentImage, playerX, playerY, playerWidth, playerHeight);
+            } else {
+                ctx.save();
+                ctx.scale(-1, 1);
+                ctx.drawImage(currentImage, -playerX - playerWidth, playerY, playerWidth, playerHeight);
+                ctx.restore();
+            }
+
+            const currentBatImage = batToggleCounter === 0 ? batImages.bat1 : batImages.bat2;
+            ctx.drawImage(currentBatImage, batX, batY, batWidth, batHeight);
+
+            ctx.drawImage(coinImage, coinX, coinY, coinWidth, coinHeight);
+
+            drawLives();
+            drawPoints();
+
+            imageToggleCounter++;
+
+            requestAnimationFrame(updateGame);
+        }
+
+        // Actualiza el tamaño del canvas cuando cambia el tamaño de la ventana
+        window.addEventListener('resize', resizeCanvas);
+
+        updateGame();
+    </script>
+</body>
+</html>

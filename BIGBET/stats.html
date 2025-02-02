@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigBet - Estadísticas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #34495e, #16a085);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .stats-container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 30px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .stats-title {
+            font-size: 48px;
+            color: #f39c12;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px #f39c12, 0 0 20px #f39c12, 0 0 30px #f39c12;
+            }
+            100% {
+                text-shadow: 0 0 20px #e74c3c, 0 0 30px #e74c3c, 0 0 40px #e74c3c;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .stat {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #ecf0f1;
+            animation: fadeIn 1s ease-out;
+            word-wrap: break-word;
+        }
+
+        .button {
+            background-color: #e74c3c;
+            border: none;
+            font-size: 28px;
+            padding: 20px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 30px;
+            color: white;
+        }
+
+        .button:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="stats-container">
+    <div class="stats-title">Estadísticas</div>
+    <div class="stat">Apuestas realizadas: <span id="betsMade">0</span></div>
+    <div class="stat">Victorias: <span id="wins">0</span></div>
+    <div class="stat">Derrotas: <span id="losses">0</span></div>
+    <div class="stat">Saldo actual: $<span id="currentBalance">0</span></div>
+    
+    <button class="button" onclick="window.location.href='./index.html'">Volver al juego</button>
+</div>
+
+<script>
+    // Recuperar estadísticas del localStorage
+    let betsMade = parseInt(localStorage.getItem('bigbetBetsMade')) || 0;
+    let wins = parseInt(localStorage.getItem('bigbetWins')) || 0;
+    let losses = parseInt(localStorage.getItem('bigbetLosses')) || 0;
+    let currentBalance = parseInt(localStorage.getItem('bigbetdinero')) || 1000;
+
+    // Mostrar las estadísticas en los elementos correspondientes
+    document.getElementById('betsMade').innerText = betsMade;
+    document.getElementById('wins').innerText = wins;
+    document.getElementById('losses').innerText = losses;
+    document.getElementById('currentBalance').innerText = currentBalance;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Círculo Móvil con Temporizador - Retro</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #065c05; /* Fondo inicial verde oscuro */
+      font-family: 'Press Start 2P', cursive;
+      position: relative;
+      user-select: none;
+    }
+
+    .circle {
+      position: absolute;
+      width: 400px; /* Tamaño inicial del círculo */
+      height: 400px; /* Tamaño inicial del círculo */
+      background-color: #45c942; /* Color claro inicial (más claro que el fondo) */
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 48px; /* Tamaño del contador dentro del círculo */
+      color: #fff;
+      font-weight: bold;
+      border: 10px solid black; /* Borde negro constante */
+      z-index: 1;
+      transition: background-color 1s ease;
+      overflow: hidden;
+    }
+
+    .percent-counter {
+      position: absolute;
+      font-size: 500px; /* Tamaño del contador de porcentaje ajustado a 500px */
+      color: rgba(255, 255, 255, 0.5);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+    }
+
+    .victories-container {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      font-size: 22px; /* Reducido en 10px */
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-direction: column;
+    }
+
+    .victory-count {
+      font-size: 38px; /* Reducido en 10px */
+      font-weight: bold;
+    }
+
+    .time-and-percent {
+      font-size: 22px; /* Reducido en 10px */
+      color: white;
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+
+    .star {
+      position: absolute;
+      font-size: 40px; /* Tamaño de las estrellas */
+      transform: translate(-50%, -50%);
+    }
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="victories-container">
+  <span class="victory-count" id="victoryCount">0</span> <span>Estrellas</span>
+  <div class="time-and-percent">
+    <span id="timeRemaining">Tiempo restante: 01:00</span>
+    <span id="percentText">Porcentaje: 0%</span>
+  </div>
+</div>
+
+<div id="percentCounter" class="percent-counter">0%</div>
+
+<div class="circle" id="circle">
+  <span id="timer">01:00</span>
+</div>
+
+<script>
+  const circle = document.querySelector('.circle');
+  const timerElement = document.getElementById('timer');
+  const percentCounter = document.getElementById('percentCounter');
+  const victoryCount = document.getElementById('victoryCount');
+  const timeRemaining = document.getElementById('timeRemaining');
+  const percentText = document.getElementById('percentText');
+
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  let posX = (screenWidth - 400) / 2;
+  let posY = (screenHeight - 400) / 2;
+
+  // Velocidad inicial y el factor de incremento por segundo
+  let initialVelocity = 2;
+  let velocity = initialVelocity;  // Velocidad total (magnitud)
+  let direction = Math.random() * 2 * Math.PI;  // Dirección aleatoria (en radianes)
+
+  let moving = false;
+  let timeLeft = 60;
+  let percentComplete = 0;
+  let intervalTimer;
+  let intervalPercent;
+  
+  let stars = JSON.parse(localStorage.getItem('circulowin')) || 0;
+  victoryCount.textContent = stars;
+
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  }
+
+  function startMovement() {
+    moving = true;
+    intervalTimer = setInterval(updateTimer, 1000);
+    intervalPercent = setInterval(updatePercent, 1000);
+    animate();
+    displayStars();
+  }
+
+  function updateTimer() {
+    if (timeLeft > 0) {
+      timeLeft -= 1;
+      timeRemaining.textContent = `Tiempo restante: ${formatTime(timeLeft)}`;
+      timerElement.textContent = formatTime(timeLeft);
+
+      // Aumentar velocidad y reducir tamaño cada segundo
+      adjustSpeedAndSize();
+    } else {
+      clearInterval(intervalTimer);
+      clearInterval(intervalPercent);
+      showWinMessage();
+    }
+  }
+
+  function updatePercent() {
+    if (timeLeft > 0) {
+      percentComplete = ((60 - timeLeft) / 60) * 100;
+      percentCounter.textContent = `${Math.min(Math.round(percentComplete), 100)}%`;
+      percentText.textContent = `Porcentaje: ${Math.min(Math.round(percentComplete), 100)}%`;
+    }
+  }
+
+  function adjustSpeedAndSize() {
+    // Calcular la magnitud de la velocidad (de 2 a 6 gradualmente)
+    const speedFactor = (60 - timeLeft) / 60; // De 0 a 1
+    velocity = initialVelocity + (4 * speedFactor);  // Ajuste de velocidad (máximo 6)
+
+    // Reducir el tamaño del círculo de 400px a 200px gradualmente
+    const sizeFactor = (60 - timeLeft) / 60; // De 0 a 1
+    const newSize = 400 - (200 * sizeFactor); // Tamaño final entre 400px y 200px
+    circle.style.width = `${newSize}px`;
+    circle.style.height = `${newSize}px`;
+    percentCounter.style.fontSize = `${Math.max(500 - (250 * sizeFactor), 250)}px`; // Mantener tamaño del contador grande
+
+    // Cambiar el color del círculo a una tonalidad más clara, sincronizado con el fondo
+    const colors = [
+      { bgColor: "#065c05", lightColor: "#45c942" }, // Verde oscuro
+      { bgColor: "#732415", lightColor: "#f0340e" }, // Rojo oscuro
+      { bgColor: "#a67117", lightColor: "#f7b84a" }, // Naranja oscuro
+      { bgColor: "#191775", lightColor: "#3936e3" }  // Azul oscuro
+    ];
+
+    // Cambiar de fondo y círculo con base en el tiempo
+    const index = Math.floor((60 - timeLeft) / 5); // Cambiar cada 5 segundos
+    const color = colors[index];
+
+    // Cambiar el fondo
+    document.body.style.backgroundColor = color.bgColor;
+
+    // Cambiar el color del círculo a una tonalidad más clara que el fondo
+    circle.style.backgroundColor = color.lightColor;
+  }
+
+  function animate() {
+    if (!moving) return;
+
+    // Calculamos el desplazamiento en X y Y usando la dirección y la velocidad
+    const velocityX = velocity * Math.cos(direction);
+    const velocityY = velocity * Math.sin(direction);
+
+    posX += velocityX;
+    posY += velocityY;
+
+    // Si el círculo toca los bordes de la pantalla, rebota
+    if (posX <= 0 || posX >= screenWidth - circle.offsetWidth) {
+      direction = Math.PI - direction;  // Invertir dirección horizontal
+      posX = Math.max(0, Math.min(screenWidth - circle.offsetWidth, posX));
+    }
+    if (posY <= 0 || posY >= screenHeight - circle.offsetHeight) {
+      direction = -direction;  // Invertir dirección vertical
+      posY = Math.max(0, Math.min(screenHeight - circle.offsetHeight, posY));
+    }
+
+    circle.style.left = `${posX}px`;
+    circle.style.top = `${posY}px`;
+
+    requestAnimationFrame(animate);
+  }
+
+  function displayStars() {
+    const existingStars = circle.querySelectorAll('.star');
+    existingStars.forEach(star => star.remove());
+
+    for (let i = 0; i < stars; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.textContent = '★';
+      star.style.top = `${50 + 40 * Math.cos(i * 2 * Math.PI / stars)}%`;
+      star.style.left = `${50 + 40 * Math.sin(i * 2 * Math.PI / stars)}%`;
+      star.style.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
+      circle.appendChild(star);
+    }
+  }
+
+  function showWinMessage() {
+    stars += 1;
+    localStorage.setItem('circulowin', JSON.stringify(stars));
+    displayStars();
+    window.location.href = 'ganaste.html';
+  }
+
+  circle.addEventListener('mouseleave', () => {
+    if (moving) {
+      clearInterval(intervalTimer);
+      clearInterval(intervalPercent);
+      window.location.href = 'perdiste.html';
+    }
+  });
+
+  window.addEventListener('load', () => {
+    startMovement();
+  });
+</script>
+
+</body>
+</html>

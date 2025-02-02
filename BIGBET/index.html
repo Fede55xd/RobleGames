@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigBet - Juego de Apuestas</title>
+    <script src="phaser.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #34495e, #16a085);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .game-container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .game-title {
+            font-size: 60px;
+            color: #f39c12;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: bold;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px #f39c12, 0 0 20px #f39c12, 0 0 30px #f39c12;
+            }
+            100% {
+                text-shadow: 0 0 20px #e74c3c, 0 0 30px #e74c3c, 0 0 40px #e74c3c;
+            }
+        }
+
+        .balance {
+            font-size: 48px;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .balance:hover {
+            transform: scale(1.1);
+        }
+
+        .button {
+            background-color: #e74c3c;
+            border: none;
+            font-size: 28px;
+            padding: 20px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 30px;
+            color: white;
+        }
+
+        .button:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .result {
+            font-size: 32px;
+            margin-top: 20px;
+            font-weight: bold;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        input[type="number"] {
+            font-size: 24px;
+            padding: 10px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 150px;
+            border-radius: 10px;
+            border: 2px solid #2ecc71;
+            text-align: center;
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        input[type="number"]:focus {
+            border-color: #27ae60;
+            outline: none;
+        }
+
+        .cancel-text {
+            font-size: 18px;
+            color: #e74c3c;
+            margin-top: 10px;
+        }
+
+        .side-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            padding: 20px 40px;
+            border-radius: 30px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .side-button:hover {
+            background-color: #c0392b;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .left {
+            left: 500px;
+        }
+
+        .right {
+            right: 408px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <div class="game-title">BigBet</div>
+    <div class="balance">Saldo: $<span id="balance">1000</span></div>
+    
+    <input type="number" id="betAmount" placeholder="Ingresa tu apuesta" min="1" step="10">
+    
+    <button class="button" id="playButton">Apostar</button>
+    <button class="button" id="betAllButton">Apostar todo</button>
+    <button class="button" id="cancelButton" style="display:none;">Cancelar</button>
+    
+    <div class="result" id="result">Haz tu apuesta!</div>
+    <div class="cancel-text" id="cancelText" style="display:none;">Si confirmas, apostarás todo tu saldo. Puedes cancelar haciendo clic en "Cancelar".</div>
+</div>
+
+<!-- Botones fuera del contenedor principal -->
+<button class="side-button left" onclick="window.location.href='stats.html'">ESTADÍSTICAS</button>
+<button class="side-button right" onclick="window.location.href='../index.html'">Volver al Menú Principal</button>
+
+<script>
+    // Inicialización del saldo y estadísticas en localStorage
+    let saldo = parseInt(localStorage.getItem('bigbetdinero')) || 1000;
+    let betsMade = parseInt(localStorage.getItem('bigbetBetsMade')) || 0;
+    let wins = parseInt(localStorage.getItem('bigbetWins')) || 0;
+    let losses = parseInt(localStorage.getItem('bigbetLosses')) || 0;
+
+    document.getElementById('balance').innerText = saldo;
+
+    let isBettingAll = false;
+
+    // Lógica del botón "Apostar todo"
+    document.getElementById('betAllButton').addEventListener('click', function() {
+        if (!isBettingAll) {
+            document.getElementById('betAllButton').innerText = 'Confirmar';
+            document.getElementById('cancelButton').style.display = 'inline-block';
+            document.getElementById('cancelText').style.display = 'block';
+            isBettingAll = true;
+        } else {
+            document.getElementById('betAmount').value = saldo;
+            apostarTodo();
+        }
+    });
+
+    // Lógica del botón "Cancelar"
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        document.getElementById('betAllButton').innerText = 'Apostar todo';
+        document.getElementById('cancelButton').style.display = 'none';
+        document.getElementById('cancelText').style.display = 'none';
+        isBettingAll = false;
+    });
+
+    // Lógica del juego
+    document.getElementById('playButton').addEventListener('click', function() {
+        let apuesta = parseInt(document.getElementById('betAmount').value);
+
+        if (!apuesta || apuesta <= 0 || apuesta > saldo) {
+            document.getElementById('result').innerText = 'Ingresa una cantidad válida.';
+            document.getElementById('result').style.color = '#f39c12';  
+            setTimeout(() => {
+                document.getElementById('result').innerText = '';
+            }, 1000);
+            return;
+        }
+
+        let resultado = Math.random() > 0.5 ? 'ganaste' : 'perdiste';
+
+        if (resultado === 'ganaste') {
+            saldo += apuesta;
+            wins++;
+            document.getElementById('result').innerText = `¡Ganaste! +$${apuesta}`;
+            document.getElementById('result').style.color = '#27ae60'; 
+        } else {
+            saldo -= apuesta;
+            losses++;
+            document.getElementById('result').innerText = `¡Perdiste! -$${apuesta}`;
+            document.getElementById('result').style.color = '#c0392b'; 
+        }
+
+        betsMade++;
+
+        // Guardar datos en localStorage
+        localStorage.setItem('bigbetdinero', saldo);
+        localStorage.setItem('bigbetBetsMade', betsMade);
+        localStorage.setItem('bigbetWins', wins);
+        localStorage.setItem('bigbetLosses', losses);
+
+        // Actualizar el saldo
+        document.getElementById('balance').innerText = saldo;
+
+        // Redirigir si el saldo es 0
+        if (saldo <= 0) {
+            saldo = 0;
+            localStorage.setItem('bigbetdinero', saldo);
+            document.getElementById('balance').innerText = saldo;
+            setTimeout(() => {
+                window.location.href = "perdiste.html";
+            }, 1000);
+        }
+
+        setTimeout(() => {
+            document.getElementById('result').innerText = '';
+        }, 1000);
+    });
+
+    // Función para apostar todo
+    function apostarTodo() {
+        let apuesta = saldo;
+        let resultado = Math.random() > 0.5 ? 'ganaste' : 'perdiste';
+
+        if (resultado === 'ganaste') {
+            saldo += apuesta;
+            wins++;
+            document.getElementById('result').innerText = `¡Ganaste! +$${apuesta}`;
+            document.getElementById('result').style.color = '#27ae60'; 
+        } else {
+            saldo -= apuesta;
+            losses++;
+            document.getElementById('result').innerText = `¡Perdiste! -$${apuesta}`;
+            document.getElementById('result').style.color = '#c0392b'; 
+        }
+
+        betsMade++;
+
+        // Guardar datos en localStorage
+        localStorage.setItem('bigbetdinero', saldo);
+        localStorage.setItem('bigbetBetsMade', betsMade);
+        localStorage.setItem('bigbetWins', wins);
+        localStorage.setItem('bigbetLosses', losses);
+
+        // Actualizar el saldo
+        document.getElementById('balance').innerText = saldo;
+
+        // Redirigir si el saldo es 0
+        if (saldo <= 0) {
+            saldo = 0;
+            localStorage.setItem('bigbetdinero', saldo);
+            document.getElementById('balance').innerText = saldo;
+            setTimeout(() => {
+                window.location.href = "perdiste.html";
+            }, 1000);
+        }
+
+        setTimeout(() => {
+            document.getElementById('result').innerText = '';
+        }, 1000);
+
+        // Resetear el botón
+        document.getElementById('betAllButton').innerText = 'Apostar todo';
+        document.getElementById('cancelButton').style.display = 'none';
+        document.getElementById('cancelText').style.display = 'none';
+        isBettingAll = false;
+    }
+</script>
+
+</body>
+</html>
