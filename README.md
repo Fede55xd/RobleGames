@@ -41,11 +41,11 @@ Este proyecto es una colección de juegos de navegador creados por RobleUY (@rob
 5. **BADBAT**
    **Género**: Supervivencia / Escapar
 
-6. **THE CIRCLE OF COLORS**
+7. **THE CIRCLE OF COLORS**
    **Género**: Acción / Guerra / Competencia / Multijugador
 
-7. **BIGBET**
-   **Género**: Casino / Apuestas / Economia / Estrategia
+9. **BIGBET**
+    **Género**: Casino / Apuestas / Economia / Estrategia
     ASDSADSA 
 ---
 
