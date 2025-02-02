@@ -20,23 +20,33 @@ Este proyecto es una colección de juegos de navegador creados por RobleUY (@rob
 
 - **Juegos sin conexión**: Todos los juegos de RobleGames se pueden jugar sin conexión a Internet. Solo necesitas un navegador web para disfrutarlos.
 - **Ligero y rápido**: Los juegos están diseñados para ser ligeros y rápidos.
-- **Peso del instalador**: Aproximadamente 10 MB
+- **Peso del instalador**: Aproximadamente 18 MB
 
 ---
 
 ## 🚀 Juegos actuales
+
 1. **DISPARALIENS**  
    **Género**: Acción / Espacial / Supervivencia  
-   **Sobre el juego**: En **DISPARALIENS**, los jugadores deben elegir un mapa y una nave para enfrentarse a una invasión alienígena. El objetivo es eliminar a las naves enemigas mientras evitas que te dañen.
 
 2. **ROBASTEROIDE**  
    **Género**: Acción / Espacial / Supervivencia  
-   **Sobre el juego**: En **ROBASTEROIDE**, te adentrarás en el espacio exterior y deberás destruir cuantos asteroides puedas para conseguir el puntaje más alto posible.
 
 3. **NEON PONG**
-   **Género**: Arcade / Deportes / Competencia
-   **Sobre el juego**: **NEON PONG** es una versión moderna del clásico Pong, con gráficos brillantes y efectos visuales neon. Compite en partidas rápidas donde el objetivo es devolver la pelota a tu oponente y marcar puntos, mientras disfrutas de la dinámica retro con un toque futurista.
-   
+   **Género**: Arcade / Deportes / Competencia / Multijugador
+
+4. **TANKS BATTLE**
+   **Género**: Acción / Guerra / Competencia / Multijugador
+
+5. **BADBAT**
+   **Género**: Supervivencia / Escapar
+
+6. **THE CIRCLE OF COLORS**
+   **Género**: Acción / Guerra / Competencia / Multijugador
+
+7. **BIGBET**
+   **Género**: Casino / Apuestas / Economia / Estrategia
+    ASDSADSA 
 ---
 
 ## 🌌 Próximos juegos
