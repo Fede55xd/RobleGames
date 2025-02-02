@@ -22,32 +22,29 @@ Este proyecto es una colección de juegos de navegador creados por RobleUY (@rob
 - **Ligero y rápido**: Los juegos están diseñados para ser ligeros y rápidos.
 - **Peso del instalador**: Aproximadamente 18 MB
 
----
-
 ## 🚀 Juegos actuales
 
-1. **DISPARALIENS**
+1. **DISPARALIENS**  
 **Género**: Acción / Espacial / Supervivencia  
 
-2. **ROBASTEROIDE**
+2. **ROBASTEROIDE**  
 **Género**: Acción / Espacial / Supervivencia  
 
-3. **NEON PONG**
-**Género**: Arcade / Deportes / Competencia / Multijugador
+3. **NEON PONG**  
+**Género**: Arcade / Deportes / Competencia / Multijugador  
 
-4. **TANKS BATTLE**
-**Género**: Acción / Guerra / Competencia / Multijugador
+4. **TANKS BATTLE**  
+**Género**: Acción / Guerra / Competencia / Multijugador  
 
-5. **BADBAT**
-**Género**: Supervivencia / Escapar
+5. **BADBAT**  
+**Género**: Supervivencia / Escapar  
 
-6. **THE CIRCLE OF COLORS**
-**Género**: Acción / Guerra / Competencia / Multijugador
+6. **THE CIRCLE OF COLORS**  
+**Género**: Acción / Guerra / Competencia / Multijugador  
 
-7. **BIGBET**
-**Género**: Casino / Apuestas / Economia / Estrategia
-    ASDSADSA 
----
+7. **BIGBET**  
+**Género**: Casino / Apuestas / Economía / Estrategia
+
 
 ## 🌌 Próximos juegos
 
