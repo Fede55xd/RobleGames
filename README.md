@@ -26,26 +26,33 @@ Este proyecto es una colección de juegos de navegador creados por RobleUY (@rob
 
 ## 🚀 Juegos actuales
 
-1. **DISPARALIENS**  
+1. **DISPARALIENS**
+
    **Género**: Acción / Espacial / Supervivencia  
 
-2. **ROBASTEROIDE**  
+3. **ROBASTEROIDE**
+
    **Género**: Acción / Espacial / Supervivencia  
 
-3. **NEON PONG**
+4. **NEON PONG**
+
    **Género**: Arcade / Deportes / Competencia / Multijugador
 
-4. **TANKS BATTLE**
+5. **TANKS BATTLE**
+
    **Género**: Acción / Guerra / Competencia / Multijugador
 
-5. **BADBAT**
+6. **BADBAT**
+
    **Género**: Supervivencia / Escapar
 
 7. **THE CIRCLE OF COLORS**
+
    **Género**: Acción / Guerra / Competencia / Multijugador
 
 9. **BIGBET**
-    **Género**: Casino / Apuestas / Economia / Estrategia
+
+   **Género**: Casino / Apuestas / Economia / Estrategia
     ASDSADSA 
 ---
 
