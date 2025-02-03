@@ -9,19 +9,21 @@
       margin: 0;
       overflow: hidden;
       font-family: Arial, sans-serif;
-      background-color: black;
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       height: 100vh;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 1s ease-in-out; /* Transición suave del fondo */
     }
 
     h1 {
       font-size: 50px;
       text-align: center;
-	  color: red;
+      color: red;
     }
 
     .message {
@@ -30,7 +32,7 @@
       text-align: center;
     }
 
-    button {
+    button, button2 {
       background-color: #333;
       color: yellow;
       padding: 20px 40px;
@@ -40,16 +42,9 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-	
-	button2 {
-      background-color: #333;
+
+    button2 {
       color: skyblue;
-      padding: 20px 40px;
-      font-size: 24px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s;
     }
 
     button:hover {
@@ -88,47 +83,24 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas(); // Ajuste inicial
 
-    // Efecto de líneas blancas moviéndose
-    const lineas = [];
-    function createLines() {
-      for (let i = 0; i < 100; i++) {
-        lineas.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          velocidad: 2 + Math.random() * 3
-        });
-      }
+    // Fondo de imágenes
+    const fondos = [];
+    for (let i = 1; i <= 12; i++) {
+      fondos.push(`src/fondos/${i}.png`);
     }
 
-    // Actualización de las líneas
-    function moveLines() {
-      ctx.strokeStyle = "white";
-      ctx.lineWidth = 2;
-      lineas.forEach((linea, index) => {
-        ctx.beginPath();
-        ctx.moveTo(linea.x, linea.y);
-        linea.y += linea.velocidad;
-        ctx.lineTo(linea.x, linea.y);
-        ctx.stroke();
-
-        if (linea.y > canvas.height) {
-          linea.y = -10;
-        }
-      });
+    // Función para cambiar el fondo de manera aleatoria
+    function cambiarFondoAleatorio() {
+      const fondoAleatorio = Math.floor(Math.random() * fondos.length); // Selecciona un fondo aleatorio
+      document.body.style.backgroundImage = `url('${fondos[fondoAleatorio]}')`;
     }
 
-    // Crear las líneas de movimiento
-    createLines();
+    // Establecer un fondo aleatorio al inicio
+    cambiarFondoAleatorio();
 
-    // Función para actualizar el fondo
-    function updateBackground() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
-      moveLines();  // Mover las líneas para dar el efecto de movimiento
-      requestAnimationFrame(updateBackground); // Continuar el efecto
-    }
+    // Cambiar el fondo aleatoriamente cada 10 segundos
+    setInterval(cambiarFondoAleatorio, 10000); // 10000 ms = 10 segundos
 
-    // Iniciar el fondo animado
-    updateBackground();
   </script>
 
 </body>
