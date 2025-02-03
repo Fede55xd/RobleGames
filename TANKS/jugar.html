@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tanque Móvil</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    #fondo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('assets/fondo1.jpg');
+      background-size: cover;
+      background-position: center center;
+    }
+
+    .tanque {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      transform-origin: center;
+    }
+
+    .cañon {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      top: 30px;
+      left: 30px;
+      transform-origin: center;
+    }
+
+    .bola {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    #puntos {
+      position: absolute;
+      top: 70px;
+      width: 100%;
+      font-size: 48px;
+      color: #70bfcf;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    #mensajeGanador {
+      font-size: 32px;
+      color: white;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="fondo"></div>
+
+  <!-- Tanque 1 y Cañón -->
+  <img class="tanque" id="tanque1" src="" alt="Tanque 1" />
+  <img class="cañon" id="cañon1" src="" alt="Cañón 1" />
+  
+  <!-- Tanque 2 y Cañón -->
+  <img class="tanque" id="tanque2" src="" alt="Tanque 2" />
+  <img class="cañon" id="cañon2" src="" alt="Cañón 2" />
+
+  <div id="puntos">
+    <span id="puntosJugador1">Jugador 1: 0</span> | 
+    <span id="puntosJugador2">Jugador 2: 0</span>
+  </div>
+
+  <div id="mensajeGanador"></div>
+
+  <script>
+    // Definir los tanques y sus respectivos assets (tank y gun)
+    const tanques = {
+      1: {
+        tank: 'assets/tanks/1/tank1.png',
+        gun: 'assets/tanks/1/gun1.png'
+      },
+      2: {
+        tank: 'assets/tanks/2/tank1.png',
+        gun: 'assets/tanks/2/gun1.png'
+      },
+      3: {
+        tank: 'assets/tanks/3/tank1.png',
+        gun: 'assets/tanks/3/gun1.png'
+      },
+      4: {
+        tank: 'assets/tanks/4/tank1.png',
+        gun: 'assets/tanks/4/gun1.png'
+      }
+    };
+
+    // Seleccionar dos tanques aleatorios asegurándose que no sean el mismo
+    let tanqueSeleccionado = Math.floor(Math.random() * 4) + 1;
+    let tanqueSeleccionado2;
+    do {
+      tanqueSeleccionado2 = Math.floor(Math.random() * 4) + 1;
+    } while (tanqueSeleccionado === tanqueSeleccionado2);
+
+    // Asignar las imágenes de los tanques y cañones a las imágenes en el HTML
+    const tanque1 = document.getElementById("tanque1");
+    const cañon1 = document.getElementById("cañon1");
+    const tanque2 = document.getElementById("tanque2");
+    const cañon2 = document.getElementById("cañon2");
+
+    // Asignar las imágenes de acuerdo a los tanques seleccionados aleatoriamente
+    tanque1.src = tanques[tanqueSeleccionado].tank;
+    cañon1.src = tanques[tanqueSeleccionado].gun;
+
+    tanque2.src = tanques[tanqueSeleccionado2].tank;
+    cañon2.src = tanques[tanqueSeleccionado2].gun;
+
+    // Variables de puntuación
+    let puntosJugador1 = 0;
+    let puntosJugador2 = 0;
+
+    // Función para generar una posición aleatoria
+    function generarPosicionAleatoria() {
+      let x = Math.random() * (window.innerWidth - 100);
+      let y = Math.random() * (window.innerHeight - 100);
+      return { x, y };
+    }
+
+    // Generar posiciones aleatorias para los dos tanques asegurando que no se superpongan
+    let posX1 = 200, posY1 = 200;
+    let posX2 = 500, posY2 = 500;
+
+    // Variables de movimiento y ángulos
+    let angulo1 = 0, angulo2 = 0, velocidad1 = 5, velocidad2 = 5;
+
+    let teclas1 = { arriba: false, abajo: false, izquierda: false, derecha: false, ctrl: false }; // Flechas
+    let teclas2 = { w: false, s: false, a: false, d: false, ctrl: false }; // WASD
+
+    let bolas = [];
+    let puedeDisparar = true;
+
+    // Detectar teclas presionadas
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowUp") teclas1.arriba = true;
+      if (event.key === "ArrowDown") teclas1.abajo = true;
+      if (event.key === "ArrowLeft") teclas1.izquierda = true;
+      if (event.key === "ArrowRight") teclas1.derecha = true;
+      if (event.key === "Control" && event.location === 2 && puedeDisparar) { // Ctrl derecho para jugador 1
+        teclas1.ctrl = true;
+        disparar(tanque1, cañon1, angulo1, posX1, posY1, 1);
+      }
+
+      if (event.key === "w") teclas2.w = true;
+      if (event.key === "s") teclas2.s = true;
+      if (event.key === "a") teclas2.a = true;
+      if (event.key === "d") teclas2.d = true;
+      if (event.key === "Control" && event.location === 1 && puedeDisparar) { // Ctrl izquierdo para jugador 2
+        teclas2.ctrl = true;
+        disparar(tanque2, cañon2, angulo2, posX2, posY2, 2);
+      }
+    });
+
+    window.addEventListener("keyup", (event) => {
+      if (event.key === "ArrowUp") teclas1.arriba = false;
+      if (event.key === "ArrowDown") teclas1.abajo = false;
+      if (event.key === "ArrowLeft") teclas1.izquierda = false;
+      if (event.key === "ArrowRight") teclas1.derecha = false;
+      if (event.key === "Control" && event.location === 2) teclas1.ctrl = false;
+
+      if (event.key === "w") teclas2.w = false;
+      if (event.key === "s") teclas2.s = false;
+      if (event.key === "a") teclas2.a = false;
+      if (event.key === "d") teclas2.d = false;
+      if (event.key === "Control" && event.location === 1) teclas2.ctrl = false;
+    });
+
+    // Función para mover el tanque
+    function moverTanque(tanque, cañon, teclas, posX, posY, angulo, velocidad) {
+      if (teclas.arriba || teclas.w) { // Movimiento hacia arriba
+        posX += Math.sin(angulo * Math.PI / 180) * velocidad;
+        posY -= Math.cos(angulo * Math.PI / 180) * velocidad;
+      }
+      if (teclas.abajo || teclas.s) { // Movimiento hacia abajo
+        posX -= Math.sin(angulo * Math.PI / 180) * velocidad;
+        posY += Math.cos(angulo * Math.PI / 180) * velocidad;
+      }
+      if (teclas.izquierda || teclas.a) { // Movimiento hacia la izquierda
+        angulo -= 3;
+        if (angulo < 0) angulo += 360;
+      }
+      if (teclas.derecha || teclas.d) { // Movimiento hacia la derecha
+        angulo += 3;
+        if (angulo >= 360) angulo -= 360;
+      }
+
+      if (posX < 0) posX = 0;
+      if (posY < 0) posY = 0;
+      if (posX > window.innerWidth - 100) posX = window.innerWidth - 100;
+      if (posY > window.innerHeight - 100) posY = window.innerHeight - 100;
+
+      tanque.style.left = `${posX}px`;
+      tanque.style.top = `${posY}px`;
+      tanque.style.transform = `rotate(${angulo}deg)`;
+
+      cañon.style.left = `${posX + 30}px`;
+      cañon.style.top = `${posY + 30}px`;
+      cañon.style.transform = `rotate(${angulo}deg)`;
+
+      return { posX, posY, angulo };
+    }
+
+    // Función para disparar
+    function disparar(tanque, cañon, angulo, posX, posY, jugador) {
+      if (puedeDisparar) {
+        puedeDisparar = false;
+
+        let bola = {
+          x: posX + 50 + Math.sin(angulo * Math.PI / 180) * 30,
+          y: posY + 50 - Math.cos(angulo * Math.PI / 180) * 30,
+          angulo: angulo,
+          velocidad: 7,
+          jugador: jugador,
+          div: document.createElement("div")
+        };
+
+        bola.div.classList.add("bola");
+        bola.div.style.left = `${bola.x}px`;
+        bola.div.style.top = `${bola.y}px`;
+        document.body.appendChild(bola.div);
+
+        bolas.push(bola);
+      }
+    }
+
+    // Función para mover las bolas
+    function moverBolas() {
+      for (let i = 0; i < bolas.length; i++) {
+        let bola = bolas[i];
+
+        bola.x += Math.sin(bola.angulo * Math.PI / 180) * bola.velocidad;
+        bola.y -= Math.cos(bola.angulo * Math.PI / 180) * bola.velocidad;
+
+        bola.div.style.left = `${bola.x}px`;
+        bola.div.style.top = `${bola.y}px`;
+
+        // Detectar colisión con el otro tanque
+        if (bola.jugador === 1 && colisionConTanque(bola, tanque2)) {
+          puntosJugador1++;
+          document.getElementById("puntosJugador1").innerText = `Jugador 1: ${puntosJugador1}`;
+          reiniciarTanques();  // Aquí se llamará para reposicionar tanques
+          bola.div.remove();
+          bolas.splice(i, 1);
+          i--;
+
+          // Verificar si algún jugador ha ganado
+          if (puntosJugador1 >= 5) {
+            mostrarMensaje("¡Jugador 1 ha ganado!");
+          }
+        } else if (bola.jugador === 2 && colisionConTanque(bola, tanque1)) {
+          puntosJugador2++;
+          document.getElementById("puntosJugador2").innerText = `Jugador 2: ${puntosJugador2}`;
+          reiniciarTanques();  // Aquí se llamará para reposicionar tanques
+          bola.div.remove();
+          bolas.splice(i, 1);
+          i--;
+
+          // Verificar si algún jugador ha ganado
+          if (puntosJugador2 >= 5) {
+            mostrarMensaje("¡Jugador 2 ha ganado!");
+          }
+        }
+
+        if (bola.x < 0 || bola.y < 0 || bola.x > window.innerWidth || bola.y > window.innerHeight) {
+          bola.div.remove();
+          bolas.splice(i, 1);
+          i--;
+        }
+      }
+    }
+
+    // Función para detectar colisión entre una bola y un tanque
+    function colisionConTanque(bola, tanque) {
+      const tanqueRect = tanque.getBoundingClientRect();
+      return (
+        bola.x >= tanqueRect.left &&
+        bola.x <= tanqueRect.right &&
+        bola.y >= tanqueRect.top &&
+        bola.y <= tanqueRect.bottom
+      );
+    }
+
+    // Función para reiniciar las posiciones de los tanques
+    function reiniciarTanques() {
+      let nuevaPos1 = generarPosicionAleatoria();
+      let nuevaPos2 = generarPosicionAleatoria();
+
+      // Actualizar las posiciones de los tanques
+      posX1 = nuevaPos1.x;
+      posY1 = nuevaPos1.y;
+      posX2 = nuevaPos2.x;
+      posY2 = nuevaPos2.y;
+
+      tanque1.style.left = `${posX1}px`;
+      tanque1.style.top = `${posY1}px`;
+      tanque2.style.left = `${posX2}px`;
+      tanque2.style.top = `${posY2}px`;
+    }
+
+    // Función para mostrar el mensaje de ganador
+    // Función para mostrar el mensaje de ganador y redirigir a final.html
+function mostrarMensaje(mensaje) {
+  const mensajeElement = document.getElementById("mensajeGanador");
+  mensajeElement.innerText = mensaje;
+  mensajeElement.style.display = "block";
+
+  // Guardar el ganador en el localStorage antes de redirigir
+  if (mensaje === "¡Jugador 1 ha ganado!") {
+    localStorage.setItem("ganador", "1"); // Guardamos al jugador 1 como ganador
+  } else if (mensaje === "¡Jugador 2 ha ganado!") {
+    localStorage.setItem("ganador", "2"); // Guardamos al jugador 2 como ganador
+  }
+
+  // Redirigir después de 2 segundos (para que se vea el mensaje)
+  setTimeout(() => {
+    window.location.href = "final.html";
+  }, 60); // Puedes cambiar 2000 por el tiempo que prefieras en milisegundos
+}
+
+    // Función de animación
+    function animar() {
+      // Actualizar tanques y proyectiles
+      ({ posX: posX1, posY: posY1, angulo: angulo1 } = moverTanque(tanque1, cañon1, teclas1, posX1, posY1, angulo1, velocidad1));
+      ({ posX: posX2, posY: posY2, angulo: angulo2 } = moverTanque(tanque2, cañon2, teclas2, posX2, posY2, angulo2, velocidad2));
+      moverBolas();
+      requestAnimationFrame(animar);
+    }
+
+    animar();
+
+    window.addEventListener("keyup", (event) => {
+      if (event.key === "Control") {
+        puedeDisparar = true;
+      }
+    });
+  </script>
+
+</body>
+</html>
