@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Perdiste!</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      background-color: black; /* Fondo negro */
+    }
+
+    h1 {
+      font-size: 50px;
+      text-align: center;
+      color: red;
+    }
+
+    .message {
+      font-size: 36px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    button, button2 {
+      background-color: #333;
+      color: yellow;
+      padding: 20px 40px;
+      font-size: 24px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button2 {
+      color: skyblue;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1; /* Asegura que el fondo no tape el contenido */
+    }
+
+    /* Estrellas cayendo dinámicamente */
+    .estrella {
+      position: absolute;
+      width: 2px; /* Tamaño de las estrellas */
+      height: 2px;
+      background-color: white;
+      border-radius: 50%;
+      animation: caer 2s infinite linear;
+      opacity: 1;
+    }
+
+    @keyframes caer {
+      0% {
+        top: -100px;
+        opacity: 1;
+        transform: scale(0.5);
+      }
+      100% {
+        top: 100%;
+        opacity: 1;
+        transform: scale(1.5);
+      }
+    }
+
+    /* Crear estrellas con velocidad y tamaños aleatorios */
+    .estrella:nth-child(odd) {
+      animation-duration: 1.5s;
+    }
+
+    .estrella:nth-child(even) {
+      animation-duration: 3s;
+      animation-delay: 0.5s;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>¡Perdiste!</h1>
+  <div class="message">¡Te ha alcanzado un asteroide!</div>
+  <button onclick="window.location.href = 'index.html';">Volver al inicio</button>
+  <p><p>
+  <button2 onclick="window.location.href = 'jugar.html';">Jugar de nuevo</button2>
+
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- Estrellas cayendo con animación aleatoria -->
+  <div class="estrella" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="estrella" style="left: 20%; animation-delay: 0.3s;"></div>
+  <div class="estrella" style="left: 30%; animation-delay: 0.6s;"></div>
+  <div class="estrella" style="left: 40%; animation-delay: 0.9s;"></div>
+  <div class="estrella" style="left: 50%; animation-delay: 1.2s;"></div>
+  <div class="estrella" style="left: 60%; animation-delay: 1.5s;"></div>
+  <div class="estrella" style="left: 70%; animation-delay: 1.8s;"></div>
+  <div class="estrella" style="left: 80%; animation-delay: 2.1s;"></div>
+  <div class="estrella" style="left: 90%; animation-delay: 2.4s;"></div>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Función para ajustar el tamaño del canvas al tamaño de la ventana
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    // Llamar a resizeCanvas inicialmente y cada vez que se cambie el tamaño de la ventana
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas(); // Ajuste inicial
+  </script>
+
+</body>
+</html>

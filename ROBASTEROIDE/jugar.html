@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Naves</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Estilos base */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background-color: black; /* Fondo negro */
+    }
+
+    /* Interfaz de juego */
+    #scoreboard {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: white;
+      font-size: 18px;
+      z-index: 10;
+    }
+
+    .pause-message, .game-over {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      display: none;
+      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    /* Animación de fade in */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Canvas del juego por encima de estrellas */
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 5;
+    }
+
+    /* Estrellas cayendo dinámicamente */
+    .estrella {
+      position: absolute;
+      width: 2px; /* Aumentar el tamaño de las estrellas */
+      height: 2px;
+      background-color: white;
+      border-radius: 50%;
+      animation: caer 2s infinite linear;
+      opacity: 1;
+    }
+
+    @keyframes caer {
+      0% {
+        top: -100px;
+        opacity: 1;
+        transform: scale(0.5);
+      }
+      100% {
+        top: 100%;
+        opacity: 1; /* Mantener opacidad alta */
+        transform: scale(1.5);
+      }
+    }
+
+    /* Crear estrellas con velocidad y tamaños aleatorios */
+    .estrella:nth-child(odd) {
+      animation-duration: 1.5s;
+    }
+
+    .estrella:nth-child(even) {
+      animation-duration: 3s;
+      animation-delay: 0.5s;
+    }
+
+    /* Líneas cayendo dinámicamente */
+    .linea {
+      position: absolute;
+      width: 2px; /* El grosor de la línea */
+      height: 20px; /* La altura de la línea */
+      background-color: white;
+      animation: caerLinea 2s infinite linear;
+      opacity: 1;
+    }
+
+    @keyframes caerLinea {
+      0% {
+        top: -100px;
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        top: 100%;
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Botón JUGAR */
+    #playButton {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px 30px;
+      background-color: #28a745;
+      color: white;
+      font-size: 24px;
+      border: none;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    #playButton:hover {
+      background-color: #218838;
+    }
+
+    /* Estilo del Canvas */
+    #gameCanvas {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="background">
+    <!-- Mensajes de pausa y game over -->
+    <div class="pause-message" id="pauseMessage">Pausa</div>
+    <div class="game-over" id="gameOverMessage">¡GAME OVER!</div>
+
+    <!-- Contenedor de puntuación y récord -->
+    <div id="scoreboard">
+      <div>Puntos: <span id="score">0</span></div>
+      <div>Record: <span id="record">0</span></div>
+    </div>
+
+    <!-- Estrellas cayendo con animación aleatoria -->
+    <!-- Líneas cayendo con animación aleatoria -->
+    <div class="linea" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="linea" style="left: 20%; animation-delay: 0.3s;"></div>
+    <div class="linea" style="left: 30%; animation-delay: 0.6s;"></div>
+    <div class="linea" style="left: 40%; animation-delay: 0.9s;"></div>
+    <div class="linea" style="left: 50%; animation-delay: 1.2s;"></div>
+    <div class="linea" style="left: 60%; animation-delay: 1.5s;"></div>
+    <div class="linea" style="left: 70%; animation-delay: 1.8s;"></div>
+    <div class="linea" style="left: 80%; animation-delay: 2.1s;"></div>
+    <div class="linea" style="left: 90%; animation-delay: 2.4s;"></div>
+
+    <!-- Canvas del juego -->
+    <canvas id="gameCanvas"></canvas>
+  </div>
+
+  <!-- Botón para iniciar el juego -->
+  <button id="playButton">JUGAR</button>
+
+  <!-- Audio -->
+  <audio id="backgroundMusic" src="assets/music.mp3" loop></audio>
+
+  <script src="script.js"></script>
+
+  <script>
+    // Obtener elementos
+    const playButton = document.getElementById('playButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const gameCanvas = document.getElementById('gameCanvas');
+    
+    // Función para iniciar el juego
+    playButton.addEventListener('click', () => {
+      // Reproducir música
+      backgroundMusic.play();
+      
+      // Ocultar el botón JUGAR
+      playButton.style.display = 'none';
+
+      // Mostrar el canvas y empezar la animación del juego
+      gameCanvas.style.display = 'block';
+      
+      // Aquí es donde puedes iniciar la lógica del juego
+      // Llama a la función de inicialización del juego o cualquier lógica del juego
+      // Por ejemplo: iniciarJuego();
+    });
+  </script>
+</body>
+</html>
