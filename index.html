@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Selection Menu</title>
+  <link rel="icon" href="assets/icon.ico" type="image/x-icon" />
+  <!-- Import Press Start 2P font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    /* Global styles with a pixel-art inspired animated background */
+    body {
+      font-family: 'Press Start 2P', cursive;
+      color: #00ff00;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background with pixel grid effect */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background-image: 
+        linear-gradient(90deg, rgba(0,255,0,0.1) 1px, transparent 1px),
+        linear-gradient(rgba(0,255,0,0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      animation: pixelGrid 10s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes pixelGrid {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-20px, -20px); }
+    }
+
+    /* Title styling */
+    h1 {
+      margin: 10px;
+      text-shadow: 2px 2px 0 #000, -2px -2px 0 #000;
+    }
+
+    h1:first-of-type {
+      font-size: 2rem;
+      color: #ff00ff;
+    }
+
+    h1:nth-of-type(2) {
+      font-size: 1.2rem;
+      color: #00ffff;
+    }
+
+    /* Retro button styling */
+    .menu-button {
+      background: #222;
+      color: #00ff00;
+      font-size: 0.8rem;
+      padding: 12px 24px;
+      margin: 10px;
+      border: 2px solid #00ff00;
+      border-radius: 0;
+      cursor: pointer;
+      text-shadow: 1px 1px 0 #000;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .menu-button:hover {
+      background: #00ff00;
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    .menu-button:active {
+      transform: translateY(1px);
+    }
+
+    /* Grid layout for buttons */
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      gap: 10px;
+      z-index: 1;
+    }
+
+    @media (min-width: 768px) {
+      .menu-container {
+        grid-template-columns: repeat(4, auto);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>ROBLEGAMES</h1>
+  <h1>SELECT A GAME</h1>
+  <div class="menu-container">
+    <button class="menu-button" onclick="selectGame('Click PvP Online/index.html')">
+      CLICK PVP ONLINE
+    </button>
+  </div>
+
+  <script>
+    function selectGame(url) {
+      var audio = new Audio('assets/select.mp3'); // Selection sound
+      audio.play();
+      audio.addEventListener('ended', function () {
+        window.location.href = url;
+      });
+    }
+  </script>
+</body>
+</html>
