@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cosmic Clicker</title>
+    <meta name="description" content="A fun cosmic idle game experience" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Estilos para la pantalla de carga */
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: #0f0f23;
+        color: #db7c00;
+        font-family: sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #splash-container {
+        text-align: center;
+      }
+      #splash-container header h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+      }
+      #splash-container header p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+      }
+      .loading-bar {
+        width: 300px;
+        height: 20px;
+        background: #333;
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 0 auto;
+      }
+      .loading-progress {
+        height: 100%;
+        width: 0;
+        background-color: #ffb400;
+        border-radius: 10px;
+        animation: fillBar 2s linear forwards;
+      }
+      @keyframes fillBar {
+        to {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="splash-container">
+      <header>
+        <h1>
+          <i class="fas fa-meteor"></i> Cosmic Clicker <i class="fas fa-meteor"></i>
+        </h1>
+        <p>Entering...</p>
+      </header>
+      <div class="loading-bar">
+        <div class="loading-progress"></div>
+      </div>
+    </div>
+    <script>
+      // Redirige a juego.html cuando la barra se llena (2 segundos)
+      setTimeout(function () {
+        window.location.href = "juego.html";
+      }, 2000);
+    </script>
+  </body>
+</html>

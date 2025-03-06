@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cosmic Clicker</title>
+    <meta name="description" content="A fun cosmic idle game experience" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  </head>
+  <body>
+    <div id="game-container">
+      <header>
+        <h1><i class="fas fa-meteor"></i> Cosmic Clicker <i class="fas fa-meteor"></i></h1>
+        <p class="subtitle">Build your cosmic empire</p>
+      </header>
+      <main>
+        <div class="resources-panel">
+          <div class="resource">
+            <i class="fas fa-star"></i>
+            <span id="stardust-count">0</span>
+            <span class="resource-name">Stardust</span>
+          </div>
+          <div class="resource">
+            <i class="fas fa-gem"></i>
+            <span id="crystals-count">0</span>
+            <span class="resource-name">Crystals</span>
+          </div>
+          <div class="resource">
+            <i class="fas fa-rocket"></i>
+            <span id="rockets-count">0</span>
+            <span class="resource-name">Rockets</span>
+          </div>
+        </div>
+
+        <div class="game-area">
+          <div class="game-screen">
+            <div id="clicker-area">
+              <div id="planet" class="planet">
+                <i class="fas fa-globe-americas"></i>
+              </div>
+            </div>
+            <div id="messages" class="messages"></div>
+          </div>
+          
+          <div class="buildings-panel">
+            <h2><i class="fas fa-building"></i> Buildings</h2>
+            <div class="buildings-container">
+              <div class="building" id="stardust-collector">
+                <i class="fas fa-hand-sparkles"></i>
+                <div class="building-info">
+                  <h3>Stardust Collector</h3>
+                  <p>Collects <span id="stardust-rate">1</span> stardust per second</p>
+                  <p>Cost: <span id="stardust-collector-cost">10</span> stardust</p>
+                  <p>Owned: <span id="stardust-collector-count">0</span></p>
+                </div>
+                <button class="buy-btn" id="buy-stardust-collector">Buy</button>
+              </div>
+              
+              <div class="building" id="crystal-miner">
+                <i class="fas fa-gem"></i>
+                <div class="building-info">
+                  <h3>Crystal Miner</h3>
+                  <p>Converts stardust into crystals</p>
+                  <p>Cost: <span id="crystal-miner-cost">50</span> stardust</p>
+                  <p>Owned: <span id="crystal-miner-count">0</span></p>
+                </div>
+                <button class="buy-btn" id="buy-crystal-miner">Buy</button>
+              </div>
+              
+              <div class="building" id="rocket-factory">
+                <i class="fas fa-industry"></i>
+                <div class="building-info">
+                  <h3>Rocket Factory</h3>
+                  <p>Builds rockets from crystals</p>
+                  <p>Cost: <span id="rocket-factory-cost">25</span> crystals</p>
+                  <p>Owned: <span id="rocket-factory-count">0</span></p>
+                </div>
+                <button class="buy-btn" id="buy-rocket-factory">Buy</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="controls">
+            <button id="reset-button"><i class="fas fa-redo"></i> Reset Game</button>
+          </div>
+        </div>
+      </main>
+    </div>
+    
+    <!-- Notification modal -->
+    <div id="notification-modal" class="modal">
+      <div class="modal-content">
+        <h2 id="modal-title"><i class="fas fa-info-circle"></i> Notification</h2>
+        <p id="modal-message">This is a notification message.</p>
+        <div class="modal-buttons">
+          <button id="modal-confirm" class="modal-btn confirm-btn">Yes</button>
+          <button id="modal-cancel" class="modal-btn cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+    
+    <script src="index.js"></script>
+  </body>
+</html>
