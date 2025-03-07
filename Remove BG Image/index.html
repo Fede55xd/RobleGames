@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BigBet</title>
+    <style>
+      body {
+        background-color: #0f0f23;
+        color: #fff;
+        font-family: sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+      #content {
+        text-align: center;
+      }
+      .error {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+      .retry-button {
+        background-color: #ff4757;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .retry-button:hover {
+        background-color: #e84150;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script>
+      function checkConnection() {
+        if (navigator.onLine) {
+          // Redirige si hay conexión
+          window.location.href = "app.html";
+        } else {
+          // Muestra mensaje de error y botón para reintentar
+          document.getElementById("content").innerHTML = `
+            <div class="error">Connection error: You do not have an Internet connection. Please try again.</div>
+            <button class="retry-button" onclick="checkConnection()">Retry</button>
+          `;
+        }
+      }
+      checkConnection(); // Verifica la conexión al cargar
+    </script>
+  </body>
+</html>

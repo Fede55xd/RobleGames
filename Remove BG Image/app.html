@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove BG Image</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-image"></i> Remove BG Image</h1>
+            
+        </header>
+
+        <main>
+            <div class="upload-container" id="dropZone">
+                <div class="upload-content">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h2>Arrastra y suelta tu imagen aquí</h2>
+                    <p>o</p>
+                    <button id="selectFile" class="button">
+                        <i class="fas fa-folder-open"></i>
+                        Seleccionar archivo
+                    </button>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+            </div>
+
+            <div id="preview" class="preview-container hidden">
+                <div class="preview-wrapper">
+                    <div class="preview-item">
+                        <h3><i class="fas fa-image"></i> Imagen Original</h3>
+                        <div class="image-container">
+                            <img id="originalImage" src="" alt="Imagen original">
+                        </div>
+                    </div>
+                    <div class="preview-item">
+                        <h3><i class="fas fa-magic"></i> Imagen Procesada</h3>
+                        <div class="image-container">
+                            <img id="processedImage" src="" alt="Imagen procesada">
+                        </div>
+                    </div>
+                </div>
+                <button id="downloadBtn" class="button download-button">
+                    <i class="fas fa-download"></i>
+                    Descargar Imagen
+                </button>
+            </div>
+
+            <div id="loader" class="loader hidden">
+                <div class="spinner"></div>
+                <p><i class="fas fa-cog fa-spin"></i> Procesando imagen...</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>RobleUY</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
