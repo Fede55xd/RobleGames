@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Stand Empire</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="click-to-play" class="click-to-play">
+        <div class="click-message">
+            <h2 class="game-title">Food Stand Empire</h2>
+            <p id="welcome-text">Bienvenido futuro empresario</p>
+            <p class="click-instruction">Pulsa en cualquier lugar para comenzar</p>
+        </div>
+    </div>
+
+    <audio id="background-music" loop preload="auto" playsinline>
+        <source src="audios/music.mp3" type="audio/mp3">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+    <div id="particles"></div>
+
+    <div class="game-container">
+        <header>
+            <h1><i class="fas fa-store"></i> Food Stand Empire</h1>
+            <div class="resources">
+                <div class="resource">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span id="money">0</span>
+                    <span class="per-second">(+$<span id="mps">0</span>/s)</span>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-section="stands">
+                    <i class="fas fa-store"></i> Puestos
+                </button>
+                <button class="nav-btn" data-section="stats">
+                    <i class="fas fa-chart-line"></i> Estadísticas
+                </button>
+                <button class="nav-btn" data-section="settings">
+                    <i class="fas fa-cog"></i> Configuración
+                </button>
+            </nav>
+        </header>
+
+        <main>
+            <section id="stands" class="section active">
+                <div class="products-grid">
+                    <div class="product" id="popcorn">
+                        <div class="product-header">
+                            <div class="product-title">
+                                <h3>Puesto de Palomitas</h3>
+                                <div class="level">Nivel: 1</div>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="popcorn-progress"></div>
+                        </div>
+                        <div class="product-stats">
+                            <span class="price">Precio: $<span id="popcorn-price">2.00</span></span>
+                            <span class="sales">Vendidas: <span id="popcorn-sales">0</span></span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="sell-btn" onclick="sellProduct('popcorn', event)">
+                                <i class="fas fa-cash-register"></i>
+                                Vender
+                                <span class="button-info">+$2.0</span>
+                            </button>
+                            <button class="hire-btn" onclick="hireEmployee('popcorn')">
+                                <i class="fas fa-user-plus"></i>
+                                Contratar
+                                <span class="button-info">+$2.0/s</span>
+                            </button>
+                        </div>
+                        <div class="employees-info">
+                            <div class="current-employees">
+                                <i class="fas fa-users"></i> Empleados: <span id="popcorn-employees">0</span>
+                            </div>
+                            <div class="hire-cost">
+                                +1 Empleado <i class="fas fa-user"></i>: $<span id="popcorn-hire-cost">50</span>
+                            </div>
+                        </div>
+                        <button class="upgrade-btn" onclick="upgradeProduct('popcorn')">
+                            <i class="fas fa-arrow-up"></i>
+                            Mejorar ($50)
+                        </button>
+                    </div>
+
+                    <div class="product locked" id="donut">
+                        <div class="product-header">
+                            <div class="product-title">
+                                <h3>Puesto de Donas</h3>
+                                <div class="locked-status">(Bloqueado)</div>
+                            </div>
+                        </div>
+                        <div class="unlock-requirements">
+                            Requiere Puesto de Palomitas nivel 10
+                        </div>
+                        <button class="unlock-btn" onclick="unlockProduct('donut')">
+                            <i class="fas fa-lock"></i>
+                            Desbloquear ($1000)
+                        </button>
+                    </div>
+
+                    <div class="product locked" id="nachos">
+                        <div class="product-header">
+                            <div class="product-title">
+                                <h3>Puesto de Nachos</h3>
+                                <div class="locked-status">(Bloqueado)</div>
+                            </div>
+                        </div>
+                        <div class="unlock-requirements">
+                            Requiere Puesto de Donas nivel 11
+                        </div>
+                        <button class="unlock-btn" onclick="unlockProduct('nachos')">
+                            <i class="fas fa-lock"></i>
+                            Desbloquear ($5000)
+                        </button>
+                    </div>
+
+                    <div class="product locked" id="soda">
+                        <div class="product-header">
+                            <div class="product-title">
+                                <h3>Puesto de Bebidas</h3>
+                                <div class="locked-status">(Bloqueado)</div>
+                            </div>
+                        </div>
+                        <div class="unlock-requirements">
+                            Requiere Puesto de Nachos nivel 12
+                        </div>
+                        <button class="unlock-btn" onclick="unlockProduct('soda')">
+                            <i class="fas fa-lock"></i>
+                            Desbloquear ($25000)
+                        </button>
+                    </div>
+
+                    <div class="product locked" id="hotdog">
+                        <div class="product-header">
+                            <div class="product-title">
+                                <h3>Puesto de Hot Dogs</h3>
+                                <div class="locked-status">(Bloqueado)</div>
+                            </div>
+                        </div>
+                        <div class="unlock-requirements">
+                            Requiere Puesto de Bebidas nivel 14
+                        </div>
+                        <button class="unlock-btn" onclick="unlockProduct('hotdog')">
+                            <i class="fas fa-lock"></i>
+                            Desbloquear ($125000)
+                        </button>
+                    </div>
+
+                    <div class="product locked" id="icecream">
+                        <div class="product-header">
+                            <div class="product-title">
+                                <h3>Heladería</h3>
+                                <div class="locked-status">(Bloqueado)</div>
+                            </div>
+                        </div>
+                        <div class="unlock-requirements">
+                            Requiere Puesto de Hot Dogs nivel 15
+                        </div>
+                        <button class="unlock-btn" onclick="unlockProduct('icecream')">
+                            <i class="fas fa-lock"></i>
+                            Desbloquear ($625000)
+                        </button>
+                    </div>
+
+                    <div class="product locked" id="coffee">
+                        <div class="product-header">
+                            <div class="product-title">
+                                <h3>Cafetería</h3>
+                                <div class="locked-status">(Bloqueado)</div>
+                            </div>
+                        </div>
+                        <div class="unlock-requirements">
+                            Requiere Heladería nivel 16
+                        </div>
+                        <button class="unlock-btn" onclick="unlockProduct('coffee')">
+                            <i class="fas fa-lock"></i>
+                            Desbloquear ($3125000)
+                        </button>
+                    </div>
+
+                    <div class="product locked" id="pizza">
+                        <div class="product-header">
+                            <div class="product-title">
+                                <h3>Pizzería</h3>
+                                <div class="locked-status">(Bloqueado)</div>
+                            </div>
+                        </div>
+                        <div class="unlock-requirements">
+                            Requiere Cafetería nivel 17
+                        </div>
+                        <button class="unlock-btn" onclick="unlockProduct('pizza')">
+                            <i class="fas fa-lock"></i>
+                            Desbloquear ($15625000)
+                        </button>
+                    </div>
+
+                    <div class="product locked" id="fries">
+                        <div class="product-header">
+                            <div class="product-title">
+                                <h3>Puesto de Papas Fritas</h3>
+                                <div class="locked-status">(Bloqueado)</div>
+                            </div>
+                        </div>
+                        <div class="unlock-requirements">
+                            Requiere Pizzería nivel 18
+                        </div>
+                        <button class="unlock-btn" onclick="unlockProduct('fries')">
+                            <i class="fas fa-lock"></i>
+                            Desbloquear ($78125000)
+                        </button>
+                    </div>
+
+                    <div class="product locked" id="burger">
+                        <div class="product-header">
+                            <div class="product-title">
+                                <h3>Puesto de Hamburguesas</h3>
+                                <div class="locked-status">(Bloqueado)</div>
+                            </div>
+                        </div>
+                        <div class="unlock-requirements">
+                            Requiere Puesto de Papas Fritas nivel 20
+                        </div>
+                        <button class="unlock-btn" onclick="unlockProduct('burger')">
+                            <i class="fas fa-lock"></i>
+                            Desbloquear ($390625000)
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="stats" class="section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3><i class="fas fa-dollar-sign"></i> Ingresos</h3>
+                        <p>Ganancias por segundo: $<span id="income-stat">0</span></p>
+                        <p>Ventas totales: <span id="total-sales">0</span></p>
+                        <p>Ganancias totales: $<span id="total-earnings">0</span></p>
+                    </div>
+                    <div class="stat-card" style="display: none;">
+                        <h3><i class="fas fa-star"></i> Progreso</h3>
+                        <p>Nivel de Prestigio: <span id="prestige-level">0</span></p>
+                        <p>Reputación: <span id="reputation">0</span></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3><i class="fas fa-clock"></i> Tiempo Jugado</h3>
+                        <p id="play-time">0D 0H 0M 0S</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="settings" class="section">
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-globe"></i> Language / Idioma</h3>
+                        <div class="language-control">
+                            <select id="language-select">
+                                <option value="en">English</option>
+                                <option value="es">Español</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-card">
+                        <h3><i class="fas fa-palette"></i> <span class="graphics-title">Visual Style</span></h3>
+                        <div class="style-control">
+                            <div class="style-grid" id="style-grid">
+                                <!-- Los estilos se agregarán dinámicamente aquí -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-card">
+                        <h3><i class="fas fa-sliders-h"></i> <span class="graphics-settings-title">Graphics Settings</span></h3>
+                        <div class="graphics-control">
+                            <select id="graphics-quality">
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-card">
+                        <h3><i class="fas fa-volume-up"></i> Audio Settings</h3>
+                        <div class="volume-control">
+                            <div class="volume-header">
+                                <label for="music-volume">Music Volume</label>
+                                <button class="mute-btn" id="music-mute">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                            <div class="volume-slider">
+                                <input type="range" id="music-volume" min="0" max="100" value="30">
+                                <span id="music-volume-value">30%</span>
+                            </div>
+                        </div>
+                        <div class="volume-control">
+                            <div class="volume-header">
+                                <label for="effects-volume">Effects Volume</label>
+                                <button class="mute-btn" id="effects-mute">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                            <div class="volume-slider">
+                                <input type="range" id="effects-volume" min="0" max="100" value="50">
+                                <span id="effects-volume-value">50%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
